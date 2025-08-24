@@ -1,0 +1,43 @@
+---
+description: UI components usage and patterns
+globs: components/**
+---
+
+### UI 컴포넌트 사용 규칙
+
+#### 디렉터리 구조
+
+- 재사용 가능한 원자/분자 컴포넌트는 `components/ui/`에 배치합니다.
+- 페이지 조합 전용 섹션은 `app/`에서 구성하고, UI는 가능하면 `components/ui/`에서 임포트합니다.
+
+#### 핵심 컴포넌트
+
+- [button.tsx](mdc:components/ui/button.tsx): `cva`와 `tailwind-merge` 기반 변형(variant/size) 지원.
+- [container.tsx](mdc:components/ui/container.tsx): 레이아웃 폭/패딩 컨테이너.
+- [section-title.tsx](mdc:components/ui/section-title.tsx): 섹션 타이틀(eye-brow/제목/설명).
+- [device-frame.tsx](mdc:components/ui/device-frame.tsx): 모바일 프레임 형태 미디어 래퍼.
+
+#### 스타일 결합
+
+- 클래스 결합은 반드시 `lib/utils.ts`의 `cn`을 사용합니다.
+
+#### 접근성
+
+- 인터랙티브 요소는 키보드 포커스, `aria-*` 속성, 역할(role)을 적절히 사용합니다.
+
+#### 예시
+
+```tsx
+import { Button } from '@/components/ui/button';
+import { Container } from '@/components/ui/container';
+
+export function Example() {
+  return (
+    <Container>
+      <Button size="lg" variant="secondary">
+        Action
+      </Button>
+    </Container>
+  );
+}
+```

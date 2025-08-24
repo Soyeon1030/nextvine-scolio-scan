@@ -1,0 +1,31 @@
+---
+description: Custom hooks and utils documentation
+globs: lib/**
+---
+
+### 커스텀 훅/유틸 사용 규칙
+
+#### 제공 훅 (lib/hooks.ts)
+
+- `useIntersectionObserver<T>()`: 요소 가시성 트리거. `ref`와 `isVisible` 반환.
+- `useLocalStorage<T>(key, initial)`: 로컬스토리지 동기화 상태.
+- `useFormValidation()`: `validateEmail`, `validateRequired` 제공.
+- `useScrollToElement(id)`: 스무스 스크롤 이동.
+
+사용 예시:
+
+```tsx
+const { ref, isVisible } = useIntersectionObserver<HTMLDivElement>({
+  threshold: 0.1,
+});
+const [consent, setConsent] = useLocalStorage('ssc_consent', 'unset');
+```
+
+#### 상수/타입 (lib/constants.ts, lib/types.ts)
+
+- 복잡한 하드코딩 문자열은 `constants.ts`로 추출해 사용합니다.
+- 공용 타입은 `types.ts`에서 선언하고, 컴포넌트/훅 시그니처에 재사용합니다.
+
+#### 유틸 (lib/utils.ts)
+
+- `cn(...classes)`: `clsx` + `tailwind-merge` 결합 유틸. 클래스 병합에 통일 사용.

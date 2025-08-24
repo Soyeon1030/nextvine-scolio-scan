@@ -1,0 +1,27 @@
+---
+globs: *.ts,*.tsx
+description: TypeScript conventions and path aliases
+---
+
+### TypeScript 및 경로 별칭 규칙
+
+#### 컴파일러 옵션 준수
+
+- `strict: true` 가정하에 타입을 명확히 선언합니다.
+- 공개/외부 API(컴포넌트 props, 유틸 함수 시그니처)는 명시적 타입을 작성합니다.
+- 사소한 지역 변수에는 과도한 주석/타입 지정은 지양합니다.
+
+#### 경로 별칭 사용
+
+- 내부 임포트는 `@/…` 별칭 사용을 우선합니다.
+- 예시: `import { Container } from "@/components/ui/container"`
+
+#### 리액트 컴포넌트
+
+- 함수형 컴포넌트의 props 타입은 인터페이스/타입으로 분리 선언합니다.
+- 가능하면 `React.memo`로 메모이제이션을 고려하되, 과도한 사용은 피합니다.
+
+#### 유틸/헬퍼
+
+- `lib/utils.ts`의 `cn` 유틸로 클래스명을 병합합니다.
+- 복잡한 유틸은 함수 분리와 명확한 이름을 사용합니다.

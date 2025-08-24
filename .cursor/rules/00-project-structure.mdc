@@ -1,0 +1,38 @@
+---
+alwaysApply: true
+---
+
+### 프로젝트 구조 가이드
+
+이 프로젝트는 Next.js App Router 구조를 사용합니다. 메인 엔트리는 [app/layout.tsx](mdc:app/layout.tsx)와 [app/page.tsx](mdc:app/page.tsx)입니다. 공용 타입/상수/훅은 [lib/](mdc:lib/)에 위치하며, 재사용 가능한 UI 컴포넌트는 [components/ui/](mdc:components/ui/)에 위치합니다.
+
+#### 핵심 디렉터리
+
+- `app/`: App Router 엔트리, 전역 레이아웃과 페이지. 폰트/메타데이터는 `layout.tsx`, 랜딩 페이지는 `page.tsx`.
+- `components/ui/`: 재사용 가능한 UI 컴포넌트 모음. 예: [button.tsx](mdc:components/ui/button.tsx), [container.tsx](mdc:components/ui/container.tsx), [section-title.tsx](mdc:components/ui/section-title.tsx), [device-frame.tsx](mdc:components/ui/device-frame.tsx)
+- `components/`: UI 외 유틸 컴포넌트 및 테마. 예: [theme-provider.tsx](mdc:components/theme-provider.tsx)
+- `lib/`: 앱 전반에서 쓰이는 유틸/훅/상수/타입. 예: [hooks.ts](mdc:lib/hooks.ts), [constants.ts](mdc:lib/constants.ts), [types.ts](mdc:lib/types.ts), [utils.ts](mdc:lib/utils.ts)
+- `public/`: 정적 자산(이미지 등). 예: `public/images/…`
+- `styles/` 및 `app/globals.css`: 전역 스타일과 Tailwind 레이어
+
+#### 경로 별칭
+
+`tsconfig.json`의 paths 설정을 사용합니다. 앱 내부 임포트는 `@/` 별칭을 권장합니다.
+
+```json
+{
+  "paths": {
+    "@/*": ["./*"]
+  }
+}
+```
+
+#### 런타임 가정
+
+- Next.js 15, React 19 환경
+- 빌드/타입 에러는 `next.config.mjs`에서 무시하도록 설정되어 있으나, 개발 시 에러 제거를 우선합니다.
+
+#### 컴포넌트 작성 원칙
+
+- UI는 `components/ui/`에 배치하고, 페이지별 조합은 `app/` 내에서 구성합니다.
+- 앱 전역에서 반복되는 상수/타입/훅은 `lib/`로 추출합니다.
