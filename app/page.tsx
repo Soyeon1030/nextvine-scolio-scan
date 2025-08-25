@@ -58,7 +58,7 @@ export default function LandingPage(): ReactElement {
           visible={audience === 'clinicians'}
           onDemo={handleRequestDemo}
         /> */}
-        <PrivacyDisclaimer />
+        {/* <PrivacyDisclaimer /> */}
         <LeadCaptureForms />
         {/* <FrequentlyAskedQuestions /> */}
       </main>
