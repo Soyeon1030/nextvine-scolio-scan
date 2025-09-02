@@ -2,27 +2,136 @@
 
 import { motion } from 'framer-motion'
 import { Container } from '../ui/Container'
+import { useEffect, useState, useRef } from 'react'
 
 interface AboutProps {
   language: 'ko' | 'en'
 }
 
 export function About({ language }: AboutProps) {
+  const [currentStep, setCurrentStep] = useState(0)
+  const [isInternalScrolling, setIsInternalScrolling] = useState(false)
+  const stepRef = useRef(currentStep)
+
   const content = {
     ko: {
-      title: '우리가 만드는 변화',
-      subtitle: 'AI 기술로 척추 건강을 혁신합니다',
-      description: '복잡한 병원 절차 없이, 집에서 간편하게 우리 아이의 척추 상태를 확인하세요.'
+      steps: [
+        {
+          text: (
+            <>
+              스마트폰을 통한 <span className="text-primary-300 font-bold">AI 기반 3D 척추 분석</span>
+            </>
+          )
+        },
+        {
+          text: '방사선 노출 없이, 병원 방문 없이 가능한 모니터링'
+        }
+      ]
     },
     en: {
-      title: 'The Change We Create',
-      subtitle: 'Revolutionizing spinal health with AI technology',
-      description: 'Check your child\'s spinal condition easily at home without complex hospital procedures.'
+      steps: [
+        {
+          text: (
+            <>
+              Smartphone-based <span className="text-primary-300 font-bold">AI-powered 3D spinal analysis</span>
+            </>
+          )
+        },
+        {
+          text: 'Monitoring possible without radiation exposure or hospital visits'
+        }
+      ]
     }
   }
 
+  useEffect(() => {
+    stepRef.current = currentStep
+  }, [currentStep])
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      // About 섹션이 현재 활성화된 섹션인지 확인
+      const aboutSection = document.querySelector('[data-section="about"]') as HTMLElement
+      if (!aboutSection) return
+
+      const rect = aboutSection.getBoundingClientRect()
+      const isAboutVisible = rect.top <= 0 && rect.bottom >= window.innerHeight
+
+      if (isAboutVisible && !isInternalScrolling) {
+        const maxSteps = content[language].steps.length
+        
+        if (e.deltaY > 0) {
+          // 아래로 스크롤
+          if (stepRef.current < maxSteps - 1) {
+            e.preventDefault()
+            e.stopPropagation()
+            setIsInternalScrolling(true)
+            setCurrentStep(prev => prev + 1)
+            
+            setTimeout(() => {
+              setIsInternalScrolling(false)
+            }, 800)
+          }
+        } else {
+          // 위로 스크롤
+          if (stepRef.current > 0) {
+            e.preventDefault()
+            e.stopPropagation()
+            setIsInternalScrolling(true)
+            setCurrentStep(prev => prev - 1)
+            
+            setTimeout(() => {
+              setIsInternalScrolling(false)
+            }, 800)
+          }
+        }
+      }
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const aboutSection = document.querySelector('[data-section="about"]') as HTMLElement
+      if (!aboutSection) return
+
+      const rect = aboutSection.getBoundingClientRect()
+      const isAboutVisible = rect.top <= 0 && rect.bottom >= window.innerHeight
+
+      if (isAboutVisible && !isInternalScrolling) {
+        const maxSteps = content[language].steps.length
+
+        if ((e.key === 'ArrowDown' || e.key === 'PageDown') && stepRef.current < maxSteps - 1) {
+          e.preventDefault()
+          e.stopPropagation()
+          setIsInternalScrolling(true)
+          setCurrentStep(prev => prev + 1)
+          
+          setTimeout(() => {
+            setIsInternalScrolling(false)
+          }, 800)
+        } else if ((e.key === 'ArrowUp' || e.key === 'PageUp') && stepRef.current > 0) {
+          e.preventDefault()
+          e.stopPropagation()
+          setIsInternalScrolling(true)
+          setCurrentStep(prev => prev - 1)
+          
+          setTimeout(() => {
+            setIsInternalScrolling(false)
+          }, 800)
+        }
+      }
+    }
+
+    // 이벤트를 캡처 단계에서 등록하여 우선순위를 높임
+    document.addEventListener('wheel', handleWheel, { passive: false, capture: true })
+    document.addEventListener('keydown', handleKeyDown, { capture: true })
+
+    return () => {
+      document.removeEventListener('wheel', handleWheel, { capture: true })
+      document.removeEventListener('keydown', handleKeyDown, { capture: true })
+    }
+  }, [language, isInternalScrolling, content])
+
   return (
-    <div className="h-full flex items-center justify-center relative overflow-hidden">
+    <div data-section="about" className="h-full flex items-center justify-center relative overflow-hidden">
       {/* Background Video */}
       <video
         autoPlay
@@ -40,35 +149,53 @@ export function About({ language }: AboutProps) {
       
       {/* Content */}
       <Container size="1600" className="relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight-custom"
-          >
-            {content[language].title}
-          </motion.h2>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-xl md:text-2xl text-primary-300 font-medium mb-8"
-          >
-            {content[language].subtitle}
-          </motion.p>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-lg md:text-xl text-gray-200 leading-relaxed"
-          >
-            {content[language].description}
-          </motion.p>
+        <div className="text-center w-full h-full flex items-center justify-center px-4">
+          <div className="relative w-full max-w-none">
+            {content[language].steps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ 
+                  opacity: currentStep === index ? 1 : 0,
+                  y: currentStep === index ? 0 : (currentStep > index ? -100 : 100)
+                }}
+                transition={{ 
+                  duration: 1.0,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+                className={`absolute inset-0 flex items-center justify-center ${
+                  currentStep === index ? 'z-20' : 'z-10'
+                }`}
+              >
+                <h2 
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight whitespace-nowrap"
+                  style={{
+                    textShadow: `
+                      0 0 10px rgba(255, 255, 255, 0.4),
+                      0 0 20px rgba(255, 255, 255, 0.25),
+                      1px 1px 2px rgba(0, 0, 0, 0.2)
+                    `
+                  }}
+                >
+                  {step.text}
+                </h2>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </Container>
+      
+      {/* Step indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-30">
+        {content[language].steps.map((_, index) => (
+          <div
+            key={index}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              currentStep === index ? 'bg-primary-400 scale-125' : 'bg-white/40'
+            }`}
+          />
+        ))}
+      </div>
     </div>
   )
 }
