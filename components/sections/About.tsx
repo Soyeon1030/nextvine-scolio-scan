@@ -19,7 +19,7 @@ export function About({ language }: AboutProps) {
         {
           text: (
             <>
-              스마트폰을 통한 <span className="text-primary-300 font-bold">AI 기반 3D 척추 분석</span>
+              스마트폰을 통한 <span className="font-bold" style={{color: '#02D8C2'}}>AI 기반 3D 척추 분석</span>
             </>
           )
         },
@@ -33,7 +33,7 @@ export function About({ language }: AboutProps) {
         {
           text: (
             <>
-              Smartphone-based <span className="text-primary-300 font-bold">AI-powered 3D spinal analysis</span>
+              Smartphone-based <span className="font-bold" style={{color: '#02D8C2'}}>AI-powered 3D spinal analysis</span>
             </>
           )
         },
