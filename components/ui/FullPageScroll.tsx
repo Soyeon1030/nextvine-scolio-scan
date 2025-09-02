@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
 interface FullPageScrollProps {
-  children: React.ReactNode[]
+  children: React.ReactNode | React.ReactNode[]
   className?: string
 }
 
@@ -15,8 +15,11 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
   const [isMobile, setIsMobile] = useState(false)
   const touchStartY = useRef<number>(0)
 
+  // children을 배열로 변환
+  const childrenArray = Array.isArray(children) ? children : [children]
+
   const scrollToSection = (sectionIndex: number) => {
-    if (isScrolling || sectionIndex < 0 || sectionIndex >= children.length) return
+    if (isScrolling || sectionIndex < 0 || sectionIndex >= childrenArray.length) return
     
     setIsScrolling(true)
     setCurrentSection(sectionIndex)
@@ -56,11 +59,14 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
     window.addEventListener('scrollToSection', handleScrollToSection as EventListener)
 
     const handleWheel = (e: WheelEvent) => {
-      if (isMobile) return // 모바일에서는 기본 스크롤 동작
+      if (isMobile || isScrolling) return
+      
+      // Services 섹션(인덱스 6)에서는 휠 이벤트를 처리하지 않음
+      if (currentSection === 6) {
+        return // Services 섹션에서 자체 처리하도록 함
+      }
       
       e.preventDefault()
-      
-      if (isScrolling) return
       
       if (e.deltaY > 0) {
         // 아래로 스크롤
@@ -91,7 +97,7 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
           break
         case 'End':
           e.preventDefault()
-          scrollToSection(children.length - 1)
+          scrollToSection(childrenArray.length - 1)
           break
       }
     }
@@ -137,7 +143,7 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
         window.removeEventListener('touchend', handleTouchEnd)
       }
     }
-  }, [currentSection, isScrolling, children.length, isMobile])
+  }, [currentSection, isScrolling, childrenArray.length, isMobile])
 
   // 창 크기 변경 시 현재 섹션으로 다시 스크롤
   useEffect(() => {
@@ -156,7 +162,7 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
     // 모바일에서는 일반 스크롤 레이아웃
     return (
       <div className={`${className}`}>
-        {children.map((child, index) => (
+        {childrenArray.map((child, index) => (
           <section
             key={index}
             className="min-h-screen w-full relative"
@@ -172,7 +178,7 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
     <div className={`fixed inset-0 overflow-hidden ${className}`}>
       {/* 스크롤 인디케이터 */}
       <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 space-y-3">
-        {children.map((_, index) => (
+        {childrenArray.map((_, index) => (
           <button
             key={index}
             onClick={() => scrollToSection(index)}
@@ -191,11 +197,11 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
         ref={containerRef}
         className="flex flex-col"
         style={{
-          height: `${children.length * 100}vh`,
+          height: `${childrenArray.length * 100}vh`,
           transition: 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         }}
       >
-        {children.map((child, index) => (
+        {childrenArray.map((child, index) => (
           <section
             key={index}
             className="h-screen w-full flex-shrink-0 relative"

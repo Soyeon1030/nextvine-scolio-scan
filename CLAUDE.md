@@ -24,44 +24,89 @@ npm run lint
 
 ## Architecture & Key Components
 
-### Core Structure
-- **Next.js 14** with App Router
+### Core Stack
+- **Next.js 14** with App Router and experimental appDir
 - **TypeScript** for type safety
-- **Tailwind CSS** for styling with custom primary color theme
-- **Framer Motion** for animations
+- **Tailwind CSS** for styling with extensive custom configuration
+- **Framer Motion** for animations and transitions
+- **Lucide React** for icons
 
-### Navigation System
+### Critical System: Custom Full-Page Scroll
 The app uses a custom full-page scroll system instead of traditional routing:
-- `FullPageScroll` component manages vertical section navigation
-- Custom event system (`scrollToSection`) enables programmatic navigation
-- Sections are indexed: Hero (0), About (1), Features (2), Services (3), Contact (4)
+- `FullPageScroll` component (`components/ui/FullPageScroll.tsx`) manages vertical section navigation
+- **Desktop**: Uses `transform: translateY()` with custom event system for smooth transitions
+- **Mobile**: Automatically switches to standard scroll behavior for better UX
+- **Navigation Methods**: 
+  - Mouse wheel events
+  - Keyboard (Arrow keys, PageUp/Down, Home/End)
+  - Touch gestures (swipe up/down)
+  - Programmatic via `scrollToSection` custom events
+- **Section Management**: Tracks current section state, prevents rapid scrolling with cooldown
 
-### Language Management
-- Context-based language switching between Korean ('ko') and English ('en')
-- Language state managed in main page component and passed to sections
-- Toggle button in Navigation component
+### Language System Architecture
+- `LanguageContext` in main page provides centralized language state
+- `useLanguage()` hook for accessing language context
+- All section components receive `language: 'ko' | 'en'` prop
+- Language toggle integrated in Navigation component
+- No routing - pure context-based state management
 
-### Custom Components Structure
-- **UI Components** (`components/ui/`): Reusable components like Button, Container, FullPageScroll
-- **Section Components** (`components/sections/`): Individual page sections
-- **Navigation**: Fixed header with language toggle and scroll-to-contact functionality
+### Component Architecture
+```
+components/
+├── ui/           # Reusable UI components
+│   ├── FullPageScroll.tsx  # Core scroll system
+│   ├── Button.tsx          # Styled button variants
+│   ├── Container.tsx       # Layout container
+│   └── ScrollIndicator.tsx # Right-side dots navigation
+├── sections/     # Page sections (8 total sections)
+│   ├── Hero.tsx
+│   ├── About.tsx
+│   ├── Features.tsx
+│   ├── Interactive.tsx
+│   ├── Solution.tsx
+│   ├── Monitoring.tsx
+│   ├── Services.tsx
+│   └── Contact.tsx
+└── Navigation.tsx  # Fixed header with language toggle
+```
 
-### Styling System
-- Custom Tailwind configuration with primary color palette (teal/cyan theme)
-- Utility function `cn()` for class merging using clsx and tailwind-merge
-- Custom animations: fade-in and slide-up
+### Styling System Details
+- **Custom Tailwind Config**: Extensive primary color palette (50-900 shades of teal/cyan)
+- **Custom Font Stack**: Pretendard Variable with comprehensive Korean/English fallbacks
+- **Custom Animations**: `fade-in`, `slide-up` with custom keyframes
+- **Utility Functions**: 
+  - `cn()` for class merging (clsx + tailwind-merge)
+  - `scrollToElement()` for standard scroll behavior (unused in full-page mode)
+- **Special Effects**: Custom vignette gradient background
 
-### Key Features
-1. **Full-Page Scroll**: Custom implementation supporting wheel, keyboard, and touch navigation
-2. **Multilingual Support**: Korean/English toggle with context-based state management
-3. **Responsive Design**: Mobile-first approach with Tailwind CSS
-4. **Custom Scroll Indicators**: Right-side navigation dots for section jumping
+### Section Index Mapping
+Current sections in order (critical for scroll navigation):
+0. Hero
+1. About  
+2. Features
+3. Interactive
+4. Solution
+5. Monitoring
+6. Services
+7. Contact
 
 ## Development Guidelines
 
-- Follow existing TypeScript patterns and interfaces
-- Use the established `language` prop pattern for new sections
-- Maintain the custom scroll system - avoid traditional routing
-- Follow the existing component structure in `components/` directory
-- Use the `cn()` utility for conditional styling
-- Maintain the primary color theme consistency
+### Full-Page Scroll System Rules
+- Never use traditional routing - maintain single-page architecture
+- Use custom events (`scrollToSection`) for programmatic navigation
+- Test both desktop scroll behavior and mobile fallback
+- Section indices must remain consistent when adding/removing sections
+- Mobile breakpoint is `lg` (1024px) - below this switches to normal scroll
+
+### Component Patterns
+- All sections must accept `language: 'ko' | 'en'` prop
+- Use `cn()` utility for all conditional styling
+- Follow established TypeScript interfaces
+- Maintain responsive design patterns with Tailwind breakpoints
+
+### Styling Conventions
+- Use primary color palette for theme consistency
+- Apply custom animations sparingly for performance
+- Maintain Korean font stack for text rendering
+- Use Container component for consistent layout margins
