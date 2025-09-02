@@ -80,7 +80,7 @@ export function Contact({ language }: ContactProps) {
             transition={{ duration: 0.8 }}
           >
             <div className="text-center mb-8">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight-custom">
                 {content[language].title}
               </h2>
               <p className="text-lg text-gray-600">

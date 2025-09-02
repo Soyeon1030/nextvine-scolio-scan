@@ -57,7 +57,7 @@ export function Navigation() {
             >
               <Globe className="w-4 h-4" />
               <span className="uppercase font-semibold">
-                {language === 'ko' ? 'EN' : '한'}
+                {language === 'ko' ? 'KR' : 'EN'}
               </span>
             </button>
 

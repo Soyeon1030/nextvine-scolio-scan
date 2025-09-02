@@ -1,8 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Scoliscan - AI 척추 건강 모니터링',
@@ -19,7 +16,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className="scroll-smooth">
-      <body className={inter.className}>
+      <head>
+        <link 
+          rel="stylesheet" 
+          as="style" 
+          crossOrigin="" 
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" 
+        />
+      </head>
+      <body className="font-sans">
         {children}
       </body>
     </html>

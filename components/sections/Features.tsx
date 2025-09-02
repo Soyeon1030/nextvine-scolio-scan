@@ -70,7 +70,7 @@ export function Features({ language }: FeaturesProps) {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-8"
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight-custom"
           >
             {content[language].title}
           </motion.h2>
