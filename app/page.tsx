@@ -6,6 +6,7 @@ import { Hero } from '@/components/sections/Hero'
 import { About } from '@/components/sections/About'
 import { Features } from '@/components/sections/Features'
 import { Interactive } from '@/components/sections/Interactive'
+import { Solution } from '@/components/sections/Solution'
 import { Services } from '@/components/sections/Services'
 import { Contact } from '@/components/sections/Contact'
 import { FullPageScroll } from '@/components/ui/FullPageScroll'
@@ -43,6 +44,9 @@ export default function Home() {
 
           {/* Interactive 섹션 */}
           <Interactive language={language} />
+
+          {/* Solution 섹션 */}
+          <Solution language={language} />
 
           {/* Services 섹션 */}
           <Services language={language} />
