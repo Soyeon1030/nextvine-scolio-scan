@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { Container } from '../ui/Container'
-import { Shield, Brain, Heart, Clock } from 'lucide-react'
+import { ArrowRight, X, Check } from 'lucide-react'
+import Image from 'next/image'
 
 interface FeaturesProps {
   language: 'ko' | 'en'
@@ -11,94 +12,170 @@ interface FeaturesProps {
 export function Features({ language }: FeaturesProps) {
   const content = {
     ko: {
-      title: '왜 Scoliscan인가요?',
-      features: [
+      title: '왜 Scoliscan 인가요?',
+      subtitle: '반복적인 X-ray 노출을 넘어, 척추 관리의 새로운 기준을 제시합니다.',
+      comparison: [
         {
-          icon: Shield,
-          title: 'X-ray 없는 안전한 검사',
-          description: '방사선 노출 걱정 없이 안전하게 척추 상태를 확인할 수 있습니다.'
+          traditional: '반복적인 X-ray 의존',
+          scoliscan: '안전한 방사선 없는 모니터링',
+          traditionalDetail: '성장기 아이들의 방사선 노출 위험',
+          scoliscanDetail: '안전한 방사선 없는 모니터링'
         },
         {
-          icon: Brain,
-          title: 'AI 기반 정확한 분석',
-          description: '첨단 AI 기술로 전문의 수준의 정확한 척추 분석을 제공합니다.'
+          traditional: '고가의 특수 장비 필요',
+          scoliscan: '빠르고 간단한 평가',
+          traditionalDetail: '일부 병원에서만 접근 가능',
+          scoliscanDetail: '누구나 따라할 수 있는 촬영 가이드'
         },
         {
-          icon: Heart,
-          title: '집에서 편안하게',
-          description: '병원에 가지 않고도 집에서 편안하게 검사를 받을 수 있습니다.'
+          traditional: '지연되고 반응적인 의사결정',
+          scoliscan: '조기 발견과 향상된 치료 결과',
+          traditionalDetail: '증상이 악화된 뒤에야 확인',
+          scoliscanDetail: '전문의가 객관적 데이터로 환자 관리'
         },
         {
-          icon: Clock,
-          title: '정기적인 모니터링',
-          description: '매월 정기 검사로 아이의 성장과 척추 건강을 지속적으로 관리합니다.'
+          traditional: '환자의 시간·비용 부담과 불편함',
+          scoliscan: '통합된 척추 및 자세 인사이트',
+          traditionalDetail: '병원 방문과 검사 비용의 반복',
+          scoliscanDetail: '앱과 대시보드를 통해 의료진과 함께 관리'
+        },
+        {
+          traditional: '불완전하고 주관적인 모니터링',
+          scoliscan: '데이터 기반의 임상적 의사결정',
+          traditionalDetail: '촬영 간격이 길고, 변화 기록이 제한적',
+          scoliscanDetail: '매달 변화를 추적하고, 필요한 시점에 빠른 대응'
         }
       ]
     },
     en: {
       title: 'Why Scoliscan?',
-      features: [
+      subtitle: 'Beyond repetitive X-ray exposure, we present new standards for spinal care.',
+      comparison: [
         {
-          icon: Shield,
-          title: 'Safe Examination Without X-rays',
-          description: 'Check spinal condition safely without worrying about radiation exposure.'
+          traditional: 'Dependence on repetitive X-rays',
+          scoliscan: 'Safe radiation-free monitoring',
+          traditionalDetail: 'Risk of radiation exposure for growing children',
+          scoliscanDetail: 'Safe radiation-free monitoring'
         },
         {
-          icon: Brain,
-          title: 'Accurate AI-based Analysis',
-          description: 'Provides accurate spinal analysis at specialist level with advanced AI technology.'
+          traditional: 'Need for expensive special equipment',
+          scoliscan: 'Fast and simple assessment',
+          traditionalDetail: 'Accessible only in select hospitals',
+          scoliscanDetail: 'Photography guide anyone can follow'
         },
         {
-          icon: Heart,
-          title: 'Comfortable at Home',
-          description: 'Get examined comfortably at home without having to visit the hospital.'
+          traditional: 'Delayed and reactive decision-making',
+          scoliscan: 'Early detection and improved treatment outcomes',
+          traditionalDetail: 'Confirmed only after symptoms worsen',
+          scoliscanDetail: 'Specialists manage patients with objective data'
         },
         {
-          icon: Clock,
-          title: 'Regular Monitoring',
-          description: 'Continuously manage your child\'s growth and spinal health with monthly regular checkups.'
+          traditional: 'Patient time, cost burden and inconvenience',
+          scoliscan: 'Integrated spinal and posture insights',
+          traditionalDetail: 'Repeated hospital visits and examination costs',
+          scoliscanDetail: 'Management with medical staff through app and dashboard'
+        },
+        {
+          traditional: 'Incomplete and subjective monitoring',
+          scoliscan: 'Data-driven clinical decision making',
+          traditionalDetail: 'Long imaging intervals and limited change records',
+          scoliscanDetail: 'Track monthly changes and respond quickly when needed'
         }
       ]
     }
   }
 
   return (
-    <div className="h-full flex items-center justify-center bg-gradient-to-br from-primary-50 to-blue-50">
+    <div className="h-full flex items-center justify-center bg-white">
       <Container size="1600">
-        <div className="text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+        <div className="grid lg:grid-cols-[2fr,3fr] gap-12 items-center">
+          {/* Left: Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight-custom"
+            className="flex justify-center"
           >
-            {content[language].title}
-          </motion.h2>
-        </div>
+            <div className="relative w-full h-[500px] lg:h-[650px]">
+              <Image
+                src="/images/Features-image.png"
+                alt="Scoliscan Features"
+                fill
+                className="rounded-[20px] shadow-2xl object-cover"
+                priority
+              />
+            </div>
+          </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {content[language].features.map((feature, index) => {
-            const Icon = feature.icon
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.2, duration: 0.8 }}
-                className="text-center p-6 rounded-2xl bg-white shadow-lg hover:shadow-xl transition-shadow"
-              >
-                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon className="w-8 h-8 text-primary-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  {feature.title}
+          {/* Right: Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-8"
+          >
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight-custom">
+                {content[language].title}
+              </h2>
+              <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+                {content[language].subtitle}
+              </p>
+            </div>
+
+            {/* Comparison Table */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Traditional Way Section */}
+              <div className="bg-[#F2F2F2] rounded-lg p-4 space-y-3 min-w-[300px] w-full md:min-w-[400px]">
+                <h3 className="text-lg font-bold text-gray-800 text-left mb-4">
+                  기존 방식
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            )
-          })}
+                <div className="space-y-2">
+                  {content[language].comparison.map((item, index) => (
+                    <motion.div
+                      key={`traditional-${index}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1, duration: 0.6 }}
+                      className="bg-white rounded-lg p-3 text-center"
+                    >
+                      <h4 className="font-bold text-gray-900 text-base mb-1">
+                        {item.traditional}
+                      </h4>
+                      <p className="text-xs text-gray-600 leading-relaxed">
+                        {item.traditionalDetail}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Scoliscan Way Section */}
+              <div className="gradient-primary rounded-lg p-4 space-y-3 min-w-[300px] w-full md:min-w-[400px]">
+                <h3 className="text-lg font-bold text-white text-left mb-4">
+                  Scoliscan의 방식
+                </h3>
+                <div className="space-y-2">
+                  {content[language].comparison.map((item, index) => (
+                    <motion.div
+                      key={`scoliscan-${index}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1, duration: 0.6 }}
+                      className="bg-white rounded-lg p-3 text-center"
+                    >
+                      <h4 className="font-bold text-primary-600 text-base mb-1">
+                        {item.scoliscan}
+                      </h4>
+                      <p className="text-xs text-gray-600 leading-relaxed">
+                        {item.scoliscanDetail}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </Container>
     </div>

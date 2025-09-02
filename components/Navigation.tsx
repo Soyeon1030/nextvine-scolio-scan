@@ -4,6 +4,7 @@ import { Button } from './ui/Button'
 import { Container } from './ui/Container'
 import { Globe } from 'lucide-react'
 import { useLanguage } from '@/app/page'
+import { useEffect, useState } from 'react'
 
 // 커스텀 훅으로 스크롤 기능 추가
 function useScrollToSection() {
@@ -21,16 +22,57 @@ function useScrollToSection() {
 export function Navigation() {
   const { language, setLanguage } = useLanguage()
   const { scrollToSection } = useScrollToSection()
+  const [currentSection, setCurrentSection] = useState(0)
 
   const toggleLanguage = () => {
     setLanguage(language === 'ko' ? 'en' : 'ko')
   }
 
   const handleNotifyClick = () => {
-    // Contact 섹션(마지막 섹션)으로 스크롤 - 인덱스 4
-    scrollToSection(4)
+    // Contact 섹션(마지막 섹션)으로 스크롤 - 인덱스 5
+    scrollToSection(5)
   }
 
+  // 현재 섹션 감지
+  useEffect(() => {
+    const detectCurrentSection = () => {
+      const sections = document.querySelectorAll('section')
+      const scrollTop = window.scrollY || document.documentElement.scrollTop
+      const windowHeight = window.innerHeight
+
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i]
+        const rect = section.getBoundingClientRect()
+        
+        // 섹션이 화면 중앙에 위치하는지 확인
+        if (rect.top <= windowHeight / 2 && rect.bottom >= windowHeight / 2) {
+          setCurrentSection(i)
+          break
+        }
+      }
+    }
+
+    // 초기 감지
+    detectCurrentSection()
+
+    // 스크롤 이벤트 리스너
+    window.addEventListener('scroll', detectCurrentSection)
+    
+    // FullPageScroll의 섹션 변경 이벤트 리스너
+    const handleSectionChange = (e: CustomEvent) => {
+      setCurrentSection(e.detail.sectionIndex)
+    }
+    
+    window.addEventListener('sectionChanged' as any, handleSectionChange)
+
+    return () => {
+      window.removeEventListener('scroll', detectCurrentSection)
+      window.removeEventListener('sectionChanged' as any, handleSectionChange)
+    }
+  }, [])
+
+  // Features 섹션(인덱스 2)부터 logo-b.svg 사용
+  const logoSrc = currentSection >= 2 ? '/images/logo-b.svg' : '/images/logo.svg'
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md">
@@ -39,9 +81,9 @@ export function Navigation() {
           {/* 로고 */}
           <div className="flex-shrink-0 cursor-pointer flex items-center" onClick={() => scrollToSection(0)}>
             <img 
-              src="/images/logo.svg" 
+              src={logoSrc} 
               alt="Scoliscan Logo"
-              className="h-8 w-auto"
+              className="h-8 w-auto transition-all duration-300"
             />
           </div>
 
@@ -53,7 +95,11 @@ export function Navigation() {
             {/* 언어 전환 버튼 */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium text-white hover:bg-gray-100 transition-colors"
+              className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                currentSection >= 2 
+                  ? 'text-black hover:bg-gray-100' 
+                  : 'text-white hover:bg-gray-100'
+              }`}
             >
               <Globe className="w-4 h-4" />
               <span className="uppercase font-semibold">
@@ -63,7 +109,7 @@ export function Navigation() {
 
             {/* 출시 알림 받기 버튼 */}
             <Button 
-              variant="white"
+              variant={currentSection >= 2 ? "primary" : "white"}
               onClick={handleNotifyClick}
               size="sm"
               className="whitespace-nowrap"

@@ -12,6 +12,7 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
   const containerRef = useRef<HTMLDivElement>(null)
   const [currentSection, setCurrentSection] = useState(0)
   const [isScrolling, setIsScrolling] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const touchStartY = useRef<number>(0)
 
   const scrollToSection = (sectionIndex: number) => {
@@ -19,6 +20,12 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
     
     setIsScrolling(true)
     setCurrentSection(sectionIndex)
+    
+    // 섹션 변경 이벤트 발생
+    const event = new CustomEvent('sectionChanged', { 
+      detail: { sectionIndex } 
+    })
+    window.dispatchEvent(event)
     
     if (containerRef.current) {
       const targetY = sectionIndex * window.innerHeight
@@ -31,14 +38,26 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
   }
 
   useEffect(() => {
+    // 화면 크기 감지
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024) // lg 브레이크포인트
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+
     // 외부에서 스크롤 섹션 이벤트 처리
     const handleScrollToSection = (e: CustomEvent) => {
-      scrollToSection(e.detail.sectionIndex)
+      if (!isMobile) {
+        scrollToSection(e.detail.sectionIndex)
+      }
     }
 
     window.addEventListener('scrollToSection', handleScrollToSection as EventListener)
 
     const handleWheel = (e: WheelEvent) => {
+      if (isMobile) return // 모바일에서는 기본 스크롤 동작
+      
       e.preventDefault()
       
       if (isScrolling) return
@@ -53,7 +72,7 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isScrolling) return
+      if (isMobile || isScrolling) return
       
       switch (e.key) {
         case 'ArrowDown':
@@ -78,11 +97,12 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
     }
 
     const handleTouchStart = (e: TouchEvent) => {
+      if (isMobile) return // 모바일에서는 기본 터치 동작
       touchStartY.current = e.touches[0].clientY
     }
 
     const handleTouchEnd = (e: TouchEvent) => {
-      if (isScrolling) return
+      if (isMobile || isScrolling) return
       
       const touchEndY = e.changedTouches[0].clientY
       const diff = touchStartY.current - touchEndY
@@ -99,20 +119,25 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
       }
     }
 
-    // 이벤트 리스너 등록
-    window.addEventListener('wheel', handleWheel, { passive: false })
-    window.addEventListener('keydown', handleKeyDown)
-    window.addEventListener('touchstart', handleTouchStart, { passive: true })
-    window.addEventListener('touchend', handleTouchEnd, { passive: true })
+    // 이벤트 리스너 등록 (모바일이 아닐 때만)
+    if (!isMobile) {
+      window.addEventListener('wheel', handleWheel, { passive: false })
+      window.addEventListener('keydown', handleKeyDown)
+      window.addEventListener('touchstart', handleTouchStart, { passive: true })
+      window.addEventListener('touchend', handleTouchEnd, { passive: true })
+    }
 
     return () => {
+      window.removeEventListener('resize', checkMobile)
       window.removeEventListener('scrollToSection', handleScrollToSection as EventListener)
-      window.removeEventListener('wheel', handleWheel)
-      window.removeEventListener('keydown', handleKeyDown)
-      window.removeEventListener('touchstart', handleTouchStart)
-      window.removeEventListener('touchend', handleTouchEnd)
+      if (!isMobile) {
+        window.removeEventListener('wheel', handleWheel)
+        window.removeEventListener('keydown', handleKeyDown)
+        window.removeEventListener('touchstart', handleTouchStart)
+        window.removeEventListener('touchend', handleTouchEnd)
+      }
     }
-  }, [currentSection, isScrolling, children.length])
+  }, [currentSection, isScrolling, children.length, isMobile])
 
   // 창 크기 변경 시 현재 섹션으로 다시 스크롤
   useEffect(() => {
@@ -126,6 +151,22 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [currentSection])
+
+  if (isMobile) {
+    // 모바일에서는 일반 스크롤 레이아웃
+    return (
+      <div className={`${className}`}>
+        {children.map((child, index) => (
+          <section
+            key={index}
+            className="min-h-screen w-full relative"
+          >
+            {child}
+          </section>
+        ))}
+      </div>
+    )
+  }
 
   return (
     <div className={`fixed inset-0 overflow-hidden ${className}`}>
