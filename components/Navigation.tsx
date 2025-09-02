@@ -29,8 +29,8 @@ export function Navigation() {
   }
 
   const handleNotifyClick = () => {
-    // Contact 섹션(마지막 섹션)으로 스크롤 - 인덱스 6
-    scrollToSection(6)
+    // Contact 섹션(마지막 섹션)으로 스크롤 - 인덱스 7
+    scrollToSection(7)
   }
 
   // 현재 섹션 감지

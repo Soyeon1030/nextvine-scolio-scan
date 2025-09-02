@@ -7,6 +7,7 @@ import { About } from '@/components/sections/About'
 import { Features } from '@/components/sections/Features'
 import { Interactive } from '@/components/sections/Interactive'
 import { Solution } from '@/components/sections/Solution'
+import { Monitoring } from '@/components/sections/Monitoring'
 import { Services } from '@/components/sections/Services'
 import { Contact } from '@/components/sections/Contact'
 import { FullPageScroll } from '@/components/ui/FullPageScroll'
@@ -47,6 +48,9 @@ export default function Home() {
 
           {/* Solution 섹션 */}
           <Solution language={language} />
+
+          {/* Monitoring 섹션 */}
+          <Monitoring language={language} />
 
           {/* Services 섹션 */}
           <Services language={language} />
