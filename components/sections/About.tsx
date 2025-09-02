@@ -22,14 +22,30 @@ export function About({ language }: AboutProps) {
   }
 
   return (
-    <div className="h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-white">
-      <Container size="1600">
+    <div className="h-full flex items-center justify-center relative overflow-hidden">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/video/spine_Pain.mp4" type="video/mp4" />
+      </video>
+      
+      {/* Dark overlay with vignette effect for better text readability */}
+      <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+      <div className="absolute inset-0 bg-vignette"></div>
+      
+      {/* Content */}
+      <Container size="1600" className="relative z-10">
         <div className="text-center max-w-4xl mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight-custom"
+            className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight-custom"
           >
             {content[language].title}
           </motion.h2>
@@ -38,7 +54,7 @@ export function About({ language }: AboutProps) {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-xl md:text-2xl text-primary-600 font-medium mb-8"
+            className="text-xl md:text-2xl text-primary-300 font-medium mb-8"
           >
             {content[language].subtitle}
           </motion.p>
@@ -47,7 +63,7 @@ export function About({ language }: AboutProps) {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-lg md:text-xl text-gray-600 leading-relaxed"
+            className="text-lg md:text-xl text-gray-200 leading-relaxed"
           >
             {content[language].description}
           </motion.p>
