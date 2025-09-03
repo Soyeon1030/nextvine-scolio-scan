@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Container } from '../ui/Container'
 import { Button } from '../ui/Button'
+import { SurveyModal } from '../ui/SurveyModal'
 import Image from 'next/image'
 
 interface ContactProps {
@@ -16,6 +17,7 @@ export function Contact({ language }: ContactProps) {
     targetAudience: '자녀',
     agreement: false
   })
+  const [showSurveyModal, setShowSurveyModal] = useState(false)
 
   const content = {
     ko: {
@@ -62,12 +64,21 @@ export function Contact({ language }: ContactProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    console.log('Form submit clicked') // 디버깅용
+    
     if (!formData.agreement) {
       alert(language === 'ko' ? '알림 및 서비스 정보 수신에 동의해주세요.' : 'Please agree to receive notifications and service information.')
       return
     }
+    
+    if (!formData.email) {
+      alert(language === 'ko' ? '이메일을 입력해주세요.' : 'Please enter your email.')
+      return
+    }
+    
     console.log('Form submitted:', formData)
-    alert(language === 'ko' ? '알림 신청이 완료되었습니다!' : 'Notification subscription completed!')
+    // 폼 제출 성공 후 설문조사 모달 표시
+    setShowSurveyModal(true)
   }
 
   return (
@@ -201,6 +212,10 @@ export function Contact({ language }: ContactProps) {
                 size="lg"
                 className="w-full flex items-center justify-center space-x-2 text-white hover:opacity-90"
                 style={{ backgroundColor: '#22B3A4' }}
+                onClick={(e) => {
+                  console.log('Button clicked directly')
+                  handleSubmit(e as any)
+                }}
               >
                 <Image 
                   src="/images/icon-bell.svg" 
@@ -211,6 +226,15 @@ export function Contact({ language }: ContactProps) {
                 />
                 <span>{content[language].form.submit}</span>
               </Button>
+              
+              {/* 디버깅용 테스트 버튼 */}
+              <button
+                type="button"
+                onClick={() => setShowSurveyModal(true)}
+                className="mt-2 text-sm text-gray-400 hover:text-gray-600"
+              >
+                테스트: 모달 열기
+              </button>
             </form>
           </div>
         </motion.div>
@@ -252,6 +276,13 @@ export function Contact({ language }: ContactProps) {
           </div>
         </Container>
       </div>
+
+      {/* 설문조사 모달 */}
+      <SurveyModal 
+        isOpen={showSurveyModal}
+        onClose={() => setShowSurveyModal(false)}
+        language={language}
+      />
     </div>
   )
 }

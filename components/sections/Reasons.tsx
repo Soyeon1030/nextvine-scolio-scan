@@ -91,29 +91,6 @@ export function Reasons({ language }: ReasonsProps) {
     }
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
-  }
 
   return (
     <div className="h-screen relative overflow-hidden" style={{ backgroundColor: '#1D212E' }}>
@@ -121,14 +98,16 @@ export function Reasons({ language }: ReasonsProps) {
         {/* 헤더 */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: false, amount: 0.3 }}
           className="text-center mb-8"
         >
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            viewport={{ once: false, amount: 0.3 }}
             className="inline-flex items-center justify-center gap-3 mb-6 px-6 py-3 rounded-full"
             style={{ backgroundColor: 'rgba(0, 212, 170, 0.2)' }}
           >
@@ -137,9 +116,10 @@ export function Reasons({ language }: ReasonsProps) {
           </motion.div>
           
           <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            viewport={{ once: false, amount: 0.3 }}
             className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-white"
           >
             <span style={{ color: '#00D4AA' }}>{content[language].titleHighlight}</span>{' '}
@@ -147,9 +127,10 @@ export function Reasons({ language }: ReasonsProps) {
           </motion.h2>
           
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            viewport={{ once: false, amount: 0.3 }}
             className="text-xl text-gray-300"
           >
             {content[language].subtitle}
@@ -157,17 +138,19 @@ export function Reasons({ language }: ReasonsProps) {
         </motion.div>
 
         {/* 이유 카드들 */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 mx-auto"
-        >
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 mx-auto">
           {content[language].reasons.map((reason, index) => {
             return (
               <motion.div
                 key={index}
-                variants={itemVariants}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 1.2, 
+                  delay: index * 0.15, 
+                  ease: [0.25, 0.1, 0.25, 1]
+                }}
+                viewport={{ once: false, amount: 0.3 }}
                 className={cn(
                   "group relative py-6 px-10 rounded-3xl text-center",
                   "bg-white/10 backdrop-blur-sm border border-white/50",
@@ -202,13 +185,14 @@ export function Reasons({ language }: ReasonsProps) {
               </motion.div>
             )
           })}
-        </motion.div>
+        </div>
 
         {/* 면책 조항 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+          viewport={{ once: false, amount: 0.3 }}
           className="text-center"
         >
           <p className="text-sm text-gray-400 leading-relaxed whitespace-pre-line max-w-4xl mx-auto">
