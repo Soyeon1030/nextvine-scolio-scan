@@ -37,7 +37,7 @@ export function SurveyModal({ isOpen, onClose, language }: SurveyModalProps) {
 
   const handleSurveyClick = () => {
     // 구글 폼 URL로 새 창 열기
-    window.open('https://forms.google.com/survey-link', '_blank')
+    window.open('https://docs.google.com/forms/d/e/1FAIpQLSeMIgEobrea7n5JPkTI9xCergIvcTLp-7wu_q8Zb6QIyNJlrw/viewform?usp=sharing&ouid=118029072171725156830', '_blank')
     onClose()
   }
 

@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   keywords: ['척추', '건강', 'AI', '모니터링', '아이', '성장', '척추측만증'],
   authors: [{ name: 'Scoliscan Team' }],
   viewport: 'width=device-width, initial-scale=1',
+  icons: {
+    icon: '/images/favicon.ico',
+  },
 }
 
 export default function RootLayout({
