@@ -32,6 +32,8 @@ jobs:
       
       - name: Build static site
         run: npm run export
+        env:
+          NODE_ENV: production
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
