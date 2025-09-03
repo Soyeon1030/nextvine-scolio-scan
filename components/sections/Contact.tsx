@@ -226,15 +226,6 @@ export function Contact({ language }: ContactProps) {
                 />
                 <span>{content[language].form.submit}</span>
               </Button>
-              
-              {/* 디버깅용 테스트 버튼 */}
-              <button
-                type="button"
-                onClick={() => setShowSurveyModal(true)}
-                className="mt-2 text-sm text-gray-400 hover:text-gray-600"
-              >
-                테스트: 모달 열기
-              </button>
             </form>
           </div>
         </motion.div>
