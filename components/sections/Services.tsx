@@ -202,11 +202,10 @@ export function Services({ language }: ServicesProps) {
                   }}
                   className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 max-w-lg mx-auto shadow-lg"
                 >
-                  <Image
+                  <img
                     src={currentStepData.image}
                     alt={currentStepData.title}
-                    fill
-                    className="object-contain transition-transform duration-700 hover:scale-105"
+                    className="w-full h-full object-contain transition-transform duration-700 hover:scale-105"
                   />
                   {/* 이미지 오버레이 */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />

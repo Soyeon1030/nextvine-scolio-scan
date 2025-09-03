@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, createContext, useContext } from 'react'
+import { useState } from 'react'
 import { Navigation } from '@/components/Navigation'
 import { Hero } from '@/components/sections/Hero'
 import { About } from '@/components/sections/About'
@@ -13,17 +13,7 @@ import { Reasons } from '@/components/sections/Reasons'
 import { Contact } from '@/components/sections/Contact'
 import { FullPageScroll } from '@/components/ui/FullPageScroll'
 import { ScrollToTop } from '@/components/ui/ScrollToTop'
-
-// 언어 컨텍스트
-const LanguageContext = createContext<{
-  language: 'ko' | 'en'
-  setLanguage: (lang: 'ko' | 'en') => void
-}>({
-  language: 'ko',
-  setLanguage: () => {}
-})
-
-export const useLanguage = () => useContext(LanguageContext)
+import { LanguageContext } from '@/lib/language-context'
 
 export default function Home() {
   const [language, setLanguage] = useState<'ko' | 'en'>('ko')

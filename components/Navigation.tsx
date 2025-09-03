@@ -3,7 +3,7 @@
 import { Button } from './ui/Button'
 import { Container } from './ui/Container'
 import { Globe } from 'lucide-react'
-import { useLanguage } from '@/app/page'
+import { useLanguage } from '@/lib/language-context'
 import { useEffect, useState } from 'react'
 
 // 커스텀 훅으로 스크롤 기능 추가
