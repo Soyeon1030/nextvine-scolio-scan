@@ -53,7 +53,7 @@ export function Services({ language }: ServicesProps) {
           } else {
             // 마지막 단계에서 다음 섹션으로
             setTimeout(() => {
-              const event = new CustomEvent('scrollToSection', { detail: { section: 7 } })
+              const event = new CustomEvent('scrollToSection', { detail: { sectionIndex: 7 } })
               window.dispatchEvent(event)
             }, 100)
           }
@@ -65,7 +65,7 @@ export function Services({ language }: ServicesProps) {
           } else {
             // 첫 단계에서 이전 섹션으로
             setTimeout(() => {
-              const event = new CustomEvent('scrollToSection', { detail: { section: 5 } })
+              const event = new CustomEvent('scrollToSection', { detail: { sectionIndex: 5 } })
               window.dispatchEvent(event)
             }, 100)
           }
@@ -73,8 +73,8 @@ export function Services({ language }: ServicesProps) {
       }
     }
 
-    window.addEventListener('wheel', handleWheel, { passive: false, capture: true })
-    return () => window.removeEventListener('wheel', handleWheel, { capture: true } as any)
+    window.addEventListener('wheel', handleWheel, { passive: false })
+    return () => window.removeEventListener('wheel', handleWheel)
   }, [currentStep])
   const content = {
     ko: {
@@ -141,7 +141,7 @@ export function Services({ language }: ServicesProps) {
     <div ref={containerRef} className="h-screen bg-white text-gray-900 relative overflow-hidden">
       <Container size="1600" className="h-full">
         {/* 헤더 (고정) */}
-        <div className="absolute top-16 left-1/2 transform -translate-x-1/2 text-center z-20 w-full max-w-4xl px-4">
+        <div className="absolute top-16 left-1/2 transform -translate-x-1/2 text-center z-20 w-full max-w-4xl px-4 pt-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -172,7 +172,7 @@ export function Services({ language }: ServicesProps) {
         </div>
 
         {/* 단계 인디케이터 */}
-        <div className="absolute top-60 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
+        <div className="absolute top-72 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
           {content[language].steps.map((_, index) => (
             <div
               key={index}
@@ -196,9 +196,9 @@ export function Services({ language }: ServicesProps) {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9, y: -20 }}
                   transition={{ 
-                    duration: 0.8, 
+                    duration: 0.4, 
                     ease: [0.25, 0.46, 0.45, 0.94],
-                    opacity: { duration: 0.5 }
+                    opacity: { duration: 0.3 }
                   }}
                   className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 max-w-lg mx-auto shadow-lg"
                 >
@@ -223,9 +223,9 @@ export function Services({ language }: ServicesProps) {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -30, scale: 0.95 }}
                   transition={{ 
-                    duration: 0.8, 
+                    duration: 0.4, 
                     ease: [0.25, 0.46, 0.45, 0.94],
-                    delay: 0.1 
+                    delay: 0.05 
                   }}
                   className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl"
                 >
@@ -233,7 +233,7 @@ export function Services({ language }: ServicesProps) {
                     className="w-12 h-12 bg-primary-600 text-white rounded-full flex items-center justify-center text-xl font-bold mb-6 shadow-lg"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    transition={{ delay: 0.3, duration: 0.5, type: "spring" }}
+                    transition={{ delay: 0.15, duration: 0.3, type: "spring" }}
                   >
                     {currentStepData.step}
                   </motion.div>
@@ -242,7 +242,7 @@ export function Services({ language }: ServicesProps) {
                     className="text-2xl md:text-3xl font-bold mb-4 text-gray-900"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
+                    transition={{ delay: 0.2, duration: 0.3 }}
                   >
                     {currentStepData.title}
                   </motion.h3>
@@ -251,7 +251,7 @@ export function Services({ language }: ServicesProps) {
                     className="text-gray-600 leading-relaxed whitespace-pre-line mb-6"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.6 }}
+                    transition={{ delay: 0.25, duration: 0.3 }}
                   >
                     {currentStepData.description}
                   </motion.p>
@@ -261,7 +261,7 @@ export function Services({ language }: ServicesProps) {
                     className="flex flex-wrap gap-2"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.6, duration: 0.6 }}
+                    transition={{ delay: 0.3, duration: 0.3 }}
                   >
                     {currentStepData.tags.map((tag, tagIndex) => (
                       <motion.span
@@ -269,7 +269,7 @@ export function Services({ language }: ServicesProps) {
                         className="px-3 py-1 bg-primary-100 text-primary-700 text-sm rounded-full font-medium"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.7 + tagIndex * 0.1, duration: 0.4 }}
+                        transition={{ delay: 0.35 + tagIndex * 0.05, duration: 0.2 }}
                       >
                         {tag}
                       </motion.span>

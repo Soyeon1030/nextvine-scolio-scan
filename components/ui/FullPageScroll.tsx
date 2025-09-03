@@ -178,18 +178,25 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
     <div className={`fixed inset-0 overflow-hidden ${className}`}>
       {/* 스크롤 인디케이터 */}
       <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 space-y-3">
-        {childrenArray.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => scrollToSection(index)}
-            className={`block w-3 h-3 rounded-full border-2 transition-all duration-300 ${
-              currentSection === index
-                ? 'bg-primary-600 border-primary-600 scale-125'
-                : 'bg-transparent border-white/60 hover:border-white'
-            }`}
-            aria-label={`Go to section ${index + 1}`}
-          />
-        ))}
+        {childrenArray.map((_, index) => {
+          // 흰색 배경 섹션들 (About, Features, Interactive, Solution, Monitoring, Services)
+          const isLightSection = currentSection >= 1 && currentSection <= 6
+          
+          return (
+            <button
+              key={index}
+              onClick={() => scrollToSection(index)}
+              className={`block w-3 h-3 rounded-full border-2 transition-all duration-300 ${
+                currentSection === index
+                  ? 'bg-primary-600 border-primary-600 scale-125'
+                  : isLightSection 
+                    ? 'bg-transparent border-gray-300 hover:border-gray-400' 
+                    : 'bg-transparent border-white/60 hover:border-white'
+              }`}
+              aria-label={`Go to section ${index + 1}`}
+            />
+          )
+        })}
       </div>
 
       {/* 섹션 컨테이너 */}

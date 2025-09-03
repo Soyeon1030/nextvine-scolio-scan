@@ -9,8 +9,10 @@ import { Interactive } from '@/components/sections/Interactive'
 import { Solution } from '@/components/sections/Solution'
 import { Monitoring } from '@/components/sections/Monitoring'
 import { Services } from '@/components/sections/Services'
+import { Reasons } from '@/components/sections/Reasons'
 import { Contact } from '@/components/sections/Contact'
 import { FullPageScroll } from '@/components/ui/FullPageScroll'
+import { ScrollToTop } from '@/components/ui/ScrollToTop'
 
 // 언어 컨텍스트
 const LanguageContext = createContext<{
@@ -55,9 +57,15 @@ export default function Home() {
           {/* Services 섹션 */}
           <Services language={language} />
 
+          {/* Reasons 섹션 */}
+          <Reasons language={language} />
+
           {/* Contact 섹션 */}
           <Contact language={language} />
         </FullPageScroll>
+
+        {/* Scroll To Top 버튼 */}
+        <ScrollToTop />
       </main>
     </LanguageContext.Provider>
   )

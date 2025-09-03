@@ -29,8 +29,8 @@ export function Navigation() {
   }
 
   const handleNotifyClick = () => {
-    // Contact 섹션(마지막 섹션)으로 스크롤 - 인덱스 7
-    scrollToSection(7)
+    // Contact 섹션(마지막 섹션)으로 스크롤 - 인덱스 8
+    scrollToSection(8)
   }
 
   // 현재 섹션 감지
@@ -71,8 +71,8 @@ export function Navigation() {
     }
   }, [])
 
-  // Features 섹션(인덱스 2)부터 logo-b.svg 사용
-  const logoSrc = currentSection >= 2 ? '/images/logo-b.svg' : '/images/logo.svg'
+  // Features 섹션(인덱스 2)부터 logo-b.svg 사용, 하지만 Reasons 섹션(인덱스 7)과 Contact 섹션(인덱스 8)에서는 logo.svg 사용
+  const logoSrc = (currentSection === 7 || currentSection === 8) ? '/images/logo.svg' : (currentSection >= 2 ? '/images/logo-b.svg' : '/images/logo.svg')
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md">
@@ -96,7 +96,9 @@ export function Navigation() {
             <button
               onClick={toggleLanguage}
               className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                currentSection >= 2 
+                (currentSection === 7 || currentSection === 8)
+                  ? 'text-white hover:bg-gray-100/20'
+                  : currentSection >= 2 
                   ? 'text-black hover:bg-gray-100' 
                   : 'text-white hover:bg-gray-100'
               }`}
@@ -109,7 +111,7 @@ export function Navigation() {
 
             {/* 출시 알림 받기 버튼 */}
             <Button 
-              variant={currentSection >= 2 ? "primary" : "white"}
+              variant={(currentSection === 7 || currentSection === 8) ? "white" : (currentSection >= 2 ? "primary" : "white")}
               onClick={handleNotifyClick}
               size="sm"
               className="whitespace-nowrap"
