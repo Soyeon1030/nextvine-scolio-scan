@@ -31,7 +31,7 @@ export function Hero({ language }: HeroProps) {
   }
 
   return (
-    <section className="min-h-screen pb-0 gradient-primary relative overflow-hidden">
+    <section className="min-h-screen pb-0 gradient-primary relative overflow-hidden overflow-x-hidden">
       {/* 데스크톱용 Hero 이미지 - 오른쪽 바닥 */}
       <motion.div
         initial={{ opacity: 0, x: 100 }}

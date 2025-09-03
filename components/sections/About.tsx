@@ -147,7 +147,7 @@ export function About({ language }: AboutProps) {
   }, [language, isInternalScrolling, content])
 
   return (
-    <div data-section="about" className="min-h-screen lg:h-full flex items-center justify-center relative overflow-hidden">
+    <div data-section="about" className="min-h-screen lg:h-full flex items-center justify-center relative overflow-hidden overflow-x-hidden">
       {/* Background Video */}
       <video
         autoPlay
