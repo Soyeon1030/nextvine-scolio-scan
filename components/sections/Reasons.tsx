@@ -143,42 +143,38 @@ export function Reasons({ language }: ReasonsProps) {
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ 
-                  duration: 1.2, 
-                  delay: index * 0.15, 
-                  ease: [0.25, 0.1, 0.25, 1]
+                  duration: 0.6, 
+                  delay: index * 0.1, 
+                  ease: "easeOut" 
                 }}
                 viewport={{ once: false, amount: 0.3 }}
                 className={cn(
-                  "group relative py-6 px-10 rounded-3xl text-center",
+                  "relative py-6 px-10 rounded-3xl text-center",
                   "bg-white/10 backdrop-blur-sm border border-white/50",
-                  "hover:bg-gradient-to-br hover:from-primary-500/20 hover:to-primary-600/20",
-                  "hover:border-primary-400 transition-all duration-300",
-                  "cursor-pointer transform hover:scale-105",
                   "lg:min-w-[450px]"
                 )}
               >
                 <div className="flex flex-col items-center">
                   <div className={cn(
                     "w-16 h-16 rounded-2xl mb-6 flex items-center justify-center",
-                    "gradient-primary transition-all duration-300"
+                    "gradient-primary"
                   )}>
                     <Image 
                       src={reason.icon}
                       alt={reason.title}
                       width={32}
                       height={32}
-                      className="group-hover:brightness-110 transition-all duration-300"
                     />
                   </div>
                   
-                  <h3 className="text-xl font-bold text-white mb-4 group-hover:text-primary-100 transition-colors duration-300">
+                  <h3 className="text-xl font-bold text-white mb-4">
                     {reason.title}
                   </h3>
                   
-                  <p className="text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
+                  <p className="text-gray-300 leading-relaxed">
                     {reason.description}
                   </p>
                 </div>

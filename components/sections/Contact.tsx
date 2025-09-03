@@ -123,44 +123,59 @@ export function Contact({ language }: ContactProps) {
       </motion.div>
 
       <Container size="1600" className="relative z-10">
-        <div className="text-center mb-8">
+        <motion.div 
+          className="text-center mb-8"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: false, amount: 0.3 }}
+        >
           <motion.h2 
             className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight"
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            viewport={{ once: false, amount: 0.3 }}
           >
             {content[language].title}
           </motion.h2>
           <motion.p 
             className="text-xl text-white/90 mb-2"
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+            viewport={{ once: false, amount: 0.3 }}
           >
             {content[language].subtitle}
           </motion.p>
           <motion.p 
             className="text-lg text-white/80"
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+            viewport={{ once: false, amount: 0.3 }}
             dangerouslySetInnerHTML={{ __html: content[language].subtitle2 }}
           />
-        </div>
+        </motion.div>
 
         {/* 폼 */}
         <motion.div
           className="mx-auto"
           style={{ maxWidth: '650px' }}
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+          viewport={{ once: false, amount: 0.3 }}
         >
           <div className="bg-white rounded-2xl p-8 shadow-2xl">
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+                viewport={{ once: false, amount: 0.3 }}
+              >
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {content[language].form.email}
                 </label>
@@ -173,9 +188,10 @@ export function Contact({ language }: ContactProps) {
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
                   placeholder={language === 'ko' ? '이메일을 입력하세요' : 'Enter your email'}
                 />
-              </div>
+              </motion.div>
 
-              <div>
+              <motion.div
+              >
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {content[language].form.targetAudience}
                 </label>
@@ -190,9 +206,11 @@ export function Contact({ language }: ContactProps) {
                   <option value="본인">{content[language].form.targetOptions.self}</option>
                   <option value="다른 가족들">{content[language].form.targetOptions.family}</option>
                 </select>
-              </div>
+              </motion.div>
 
-              <div className="flex items-start space-x-3">
+              <motion.div 
+                className="flex items-start space-x-3"
+              >
                 <input
                   type="checkbox"
                   name="agreement"
@@ -205,27 +223,30 @@ export function Contact({ language }: ContactProps) {
                 <label htmlFor="agreement" className="text-sm text-gray-600 leading-relaxed">
                   {content[language].form.agreement}
                 </label>
-              </div>
+              </motion.div>
 
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full flex items-center justify-center space-x-2 text-white hover:opacity-90"
-                style={{ backgroundColor: '#22B3A4' }}
-                onClick={(e) => {
-                  console.log('Button clicked directly')
-                  handleSubmit(e as any)
-                }}
+              <motion.div
               >
-                <Image 
-                  src="/images/icon-bell.svg" 
-                  alt="Bell Icon" 
-                  width={20} 
-                  height={20}
-                  className="filter brightness-0 saturate-100 invert"
-                />
-                <span>{content[language].form.submit}</span>
-              </Button>
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full flex items-center justify-center space-x-2 text-white hover:opacity-90"
+                  style={{ backgroundColor: '#22B3A4' }}
+                  onClick={(e) => {
+                    console.log('Button clicked directly')
+                    handleSubmit(e as any)
+                  }}
+                >
+                  <Image 
+                    src="/images/icon-bell.svg" 
+                    alt="Bell Icon" 
+                    width={20} 
+                    height={20}
+                    className="filter brightness-0 saturate-100 invert"
+                  />
+                  <span>{content[language].form.submit}</span>
+                </Button>
+              </motion.div>
             </form>
           </div>
         </motion.div>
