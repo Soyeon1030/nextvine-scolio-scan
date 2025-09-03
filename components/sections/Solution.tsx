@@ -142,7 +142,7 @@ export function Solution({ language }: SolutionProps) {
                 <motion.line
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
-                  transition={{ duration: 1.5, delay: 1.2 }}
+                  transition={{ duration: 1.0, delay: 0.8 }}
                   x1="50%"
                   y1="20%"
                   x2="20%"
@@ -156,7 +156,7 @@ export function Solution({ language }: SolutionProps) {
                 <motion.line
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
-                  transition={{ duration: 1.5, delay: 1.4 }}
+                  transition={{ duration: 1.0, delay: 1.0 }}
                   x1="20%"
                   y1="80%"
                   x2="80%"
@@ -170,7 +170,7 @@ export function Solution({ language }: SolutionProps) {
                 <motion.line
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
-                  transition={{ duration: 1.5, delay: 1.6 }}
+                  transition={{ duration: 1.0, delay: 1.2 }}
                   x1="80%"
                   y1="80%"
                   x2="50%"
