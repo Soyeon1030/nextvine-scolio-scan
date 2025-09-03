@@ -15,7 +15,7 @@ export function Container({
   return (
     <div
       className={cn(
-        'mx-auto px-4 sm:px-6 lg:px-8',
+        'mx-auto px-4 sm:px-6 lg:px-8 w-full',
         {
           'max-w-3xl': size === 'sm',
           'max-w-4xl': size === 'md',
