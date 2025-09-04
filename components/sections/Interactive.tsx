@@ -19,7 +19,7 @@ export function Interactive({ language }: InteractiveProps) {
     : 'Precise and actual-size 3D body modeling possible on all smartphones'
 
   return (
-    <section className="relative min-h-screen bg-gray-50 overflow-hidden lg:overflow-visible overflow-x-hidden">
+    <section className="relative min-h-screen lg:min-h-screen h-[900px] lg:h-auto bg-gray-50 overflow-hidden lg:overflow-visible overflow-x-hidden">
       <Container size="1600" className="relative z-10 h-full">
         {/* 제목과 부제목을 위로 위치 */}
         <div className="pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-6 sm:pb-8 text-center">
@@ -75,18 +75,19 @@ export function Interactive({ language }: InteractiveProps) {
             </div>
             
             <div className="relative">
-              {/* 핸드폰 이미지 - 인터렉티브 효과를 위해 큰 크기 유지 */}
+              {/* 핸드폰 이미지 - 데스크톱에서만 보이도록 */}
               <img 
                 src="/images/phone-img.png" 
                 alt="Phone Mockup"
-                className="w-72 h-auto md:w-80 lg:w-96 relative z-20 drop-shadow-2xl"
+                className="w-72 h-auto md:w-80 lg:w-96 relative z-20 drop-shadow-2xl lg:block hidden"
                 style={{
                   filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.3)) drop-shadow(0 10px 25px rgba(0, 0, 0, 0.2))'
                 }}
               />
               
               {/* 핸드폰 화면 영역 - scoliosis.html iframe */}
-              <div className="absolute top-9 md:top-10 lg:top-12 left-1/2 transform -translate-x-1/2 z-30">
+              {/* 데스크톱: 핸드폰 이미지 위에 절대 위치 */}
+              <div className="absolute top-9 md:top-10 lg:top-12 left-1/2 transform -translate-x-1/2 z-30 lg:block hidden">
                 <div className="w-60 h-[480px] md:w-64 md:h-[520px] lg:w-80 lg:h-[640px] rounded-3xl overflow-hidden bg-black">
                   <iframe
                     ref={iframeRef}
@@ -94,7 +95,28 @@ export function Interactive({ language }: InteractiveProps) {
                     className="w-full h-full border-none"
                     title="3D Spine Interactive"
                     allow="accelerometer; gyroscope"
+                    style={{ touchAction: 'auto', pointerEvents: 'auto' }}
                   />
+                </div>
+              </div>
+
+              {/* 태블릿/모바일: 폰 이미지 테두리 효과와 함께 */}
+              <div className="lg:hidden relative w-72 h-auto md:w-80 mx-auto">
+                <div className="relative bg-gray-900 rounded-[2.5rem] p-3 shadow-2xl">
+                  {/* 상단 테두리 (노치 영역) */}
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-28 h-6 bg-gray-900 rounded-b-xl z-40"></div>
+                  
+                  {/* iframe 영역 */}
+                  <div className="w-full h-[500px] md:h-[550px] rounded-[2rem] overflow-hidden bg-black relative">
+                    <iframe
+                      ref={iframeRef}
+                      src="/Interact/scoliosis.html"
+                      className="w-full h-full border-none"
+                      title="3D Spine Interactive"
+                      allow="accelerometer; gyroscope"
+                      style={{ touchAction: 'auto', pointerEvents: 'auto' }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
