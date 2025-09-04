@@ -120,7 +120,7 @@ export function Navigation() {
                 {language === 'ko' ? '출시 알림 받기' : 'Get Launch Notifications'}
               </span>
               <span className="sm:hidden">
-                {language === 'ko' ? '알림' : 'Notify'}
+                {language === 'ko' ? '알림받기' : 'Notify'}
               </span>
             </Button>
           </div>
