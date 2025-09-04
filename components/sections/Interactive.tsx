@@ -1,7 +1,7 @@
 'use client'
 
 import { Container } from '../ui/Container'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import SpinalInteraction from '../ui/SpinalInteraction'
 import SpinalControls from '../ui/SpinalControls'
 
@@ -9,18 +9,31 @@ interface InteractiveProps {
   language: 'ko' | 'en'
 }
 
+// 반응형 크기 상수
+const CIRCLE_SIZES = 'w-[400px] h-[200px] sm:w-[500px] sm:h-[250px] md:w-[650px] md:h-[325px] lg:w-[850px] lg:h-[425px] xl:w-[1050px] xl:h-[525px]'
+const ANIMATION_COLOR = '#02D8C2'
+
+type CurveType = 'healthy' | 'thoracic' | 'lumbar' | 'thoracolumbar' | 'combined'
+
 export function Interactive({ language }: InteractiveProps) {
-  const iframeRef = useRef<HTMLIFrameElement>(null)
   const [severity, setSeverity] = useState(30)
-  const [curveType, setCurveType] = useState<'healthy' | 'thoracic' | 'lumbar' | 'thoracolumbar' | 'combined'>('combined')
+  const [curveType, setCurveType] = useState<CurveType>('combined')
 
-  const title = language === 'ko' 
-    ? '스마트폰 하나로 완성되는 3D 척추 분석'
-    : '3D Spine Analysis Completed with Just One Smartphone'
-
-  const subtitle = language === 'ko'
-    ? '모든 스마트폰에서 가능한 정밀하고 실제 크기의 3D 신체 모델링'
-    : 'Precise and actual-size 3D body modeling possible on all smartphones'
+  // 다국어 텍스트 객체
+  const content = {
+    ko: {
+      title: '스마트폰 하나로 완성되는 3D 척추 분석',
+      subtitle: '모든 스마트폰에서 가능한 정밀하고 실제 크기의 3D 신체 모델링',
+      instruction: '아래 컨트롤로 척추 각도 조정하기'
+    },
+    en: {
+      title: '3D Spine Analysis Completed with Just One Smartphone',
+      subtitle: 'Precise and actual-size 3D body modeling possible on all smartphones',
+      instruction: 'Use controls below to adjust spine angle'
+    }
+  }
+  
+  const { title, subtitle, instruction } = content[language]
 
   return (
     <>
@@ -40,26 +53,19 @@ export function Interactive({ language }: InteractiveProps) {
 
         {/* 하단에 고정된 반원 배경과 핸드폰 */}
         <div className="absolute bottom-0 left-0 right-0 flex justify-center">
-          {/* 애니메이션 선 - 하나만 */}
+          {/* 애니메이션 원 */}
           <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 pointer-events-none">
             <div 
-              className="rounded-t-full border-[2px] w-[400px] h-[200px] sm:w-[500px] sm:h-[250px] md:w-[650px] md:h-[325px] lg:w-[850px] lg:h-[425px] xl:w-[1050px] xl:h-[525px]"
+              className={`rounded-t-full border-2 border-b-0 ${CIRCLE_SIZES}`}
               style={{
-                borderColor: '#02D8C2',
-                borderBottomWidth: '0px',
+                borderColor: ANIMATION_COLOR,
                 animation: 'singleExpandFade 3s ease-out infinite'
               }}
             />
           </div>
           
-          {/* 반원 배경 - 애니메이션과 정확히 같은 곡률로 맞춤 */}
-          <div 
-            className="gradient-primary rounded-t-full w-[400px] h-[200px] sm:w-[500px] sm:h-[250px] md:w-[650px] md:h-[325px] lg:w-[850px] lg:h-[425px] xl:w-[1050px] xl:h-[525px] relative"
-            style={{
-              borderBottomLeftRadius: 0,
-              borderBottomRightRadius: 0
-            }}
-          >
+          {/* 반원 배경 */}
+          <div className={`gradient-primary rounded-t-full ${CIRCLE_SIZES} relative`}>
             {/* 핸드폰 목업 - 반원 하단 중앙에 위치 */}
             <div className="absolute bottom-12 sm:bottom-4 md:bottom-0 lg:-bottom-8 xl:-bottom-12 left-1/2 transform -translate-x-1/2">
               {/* 간단한 안내 텍스트 - 핸드폰 상단 */}
@@ -71,10 +77,7 @@ export function Interactive({ language }: InteractiveProps) {
                     className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5"
                   />
                   <p className="text-xs sm:text-sm md:text-base text-gray-600 font-medium">
-                    {language === 'ko' 
-                      ? '아래 컨트롤로 척추 각도 조정하기'
-                      : 'Use controls below to adjust spine angle'
-                    }
+                    {instruction}
                   </p>
                 </div>
               </div>
@@ -84,15 +87,12 @@ export function Interactive({ language }: InteractiveProps) {
                 <img 
                   src="/images/phone-img.png" 
                   alt="Phone Mockup"
-                  className="w-64 h-auto lg:w-80 xl:w-96 relative z-20 drop-shadow-2xl lg:block hidden"
-                  style={{
-                    filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.3)) drop-shadow(0 10px 25px rgba(0, 0, 0, 0.2))'
-                  }}
+                  className="w-64 h-auto lg:w-80 xl:w-96 relative z-20 drop-shadow-2xl hidden lg:block"
                 />
                 
                 {/* 핸드폰 화면 영역 - SpinalInteraction 컴포넌트 */}
                 {/* 데스크톱: 핸드폰 이미지 위에 절대 위치 */}
-                <div className="absolute top-9 lg:top-10 xl:top-12 left-1/2 transform -translate-x-1/2 z-30 lg:block hidden">
+                <div className="absolute top-9 lg:top-10 xl:top-12 left-1/2 transform -translate-x-1/2 z-30 hidden lg:block">
                   <div className="w-52 h-[400px] lg:w-64 lg:h-[520px] xl:w-80 xl:h-[640px] rounded-3xl overflow-hidden">
                     <SpinalInteraction 
                       language={language} 
@@ -103,14 +103,14 @@ export function Interactive({ language }: InteractiveProps) {
                   </div>
                 </div>
 
-                {/* 태블릿/모바일: 폰 이미지 테두리 효과와 함께 */}
-                <div className="lg:hidden relative w-64 h-auto md:w-72 xl:w-80 mx-auto">
+                {/* 모바일/태블릿: 커스텀 폰 프레임 */}
+                <div className="lg:hidden relative w-64 md:w-72 mx-auto">
                   <div className="relative bg-gray-900 rounded-[2.5rem] p-3 shadow-2xl">
-                    {/* 상단 테두리 (노치 영역) */}
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-28 h-6 bg-gray-900 rounded-b-xl z-40"></div>
+                    {/* 노치 영역 */}
+                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-28 h-6 bg-gray-900 rounded-b-xl z-40" />
                     
-                    {/* SpinalInteraction 컴포넌트 영역 */}
-                    <div className="w-full h-[450px] md:h-[450px] xl:h-[550px] rounded-[2rem] overflow-hidden relative">
+                    {/* 인터랙션 컴포넌트 영역 */}
+                    <div className="w-full h-[450px] rounded-[2rem] overflow-hidden relative">
                       <SpinalInteraction 
                         language={language} 
                         showControls={false}
@@ -124,7 +124,7 @@ export function Interactive({ language }: InteractiveProps) {
             </div>
           </div>
           
-          {/* 외부 컨트롤 패널 - 반원 배경 위에 위치 */}
+          {/* 컨트롤 패널 */}
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-full max-w-lg px-4 z-50">
             <SpinalControls
               language={language}

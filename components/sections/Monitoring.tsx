@@ -81,13 +81,23 @@ export function Monitoring({ language }: MonitoringProps) {
               />
             </motion.div>
 
-            {/* 앱 이미지 - sec6-app */}
+            {/* 모바일/태블릿용 앱 이미지 - sec6-app */}
+            <div className="lg:hidden absolute top-16 right-4 w-36 h-72 sm:top-20 sm:right-8 sm:w-40 sm:h-80 md:top-24 md:right-12 md:w-52 md:h-[416px] z-50">
+              <Image
+                src="/images/sec6-app.png"
+                alt="Mobile App"
+                fill
+                className="object-contain"
+              />
+            </div>
+            
+            {/* 데스크톱용 앱 이미지 */}
             <motion.div
               initial={{ x: 300, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-64 sm:w-40 sm:h-80 lg:top-24 lg:left-72 lg:w-[350px] lg:h-[600px] lg:transform-none"
-              style={{ zIndex: 30 }}
+              className="hidden lg:block absolute top-24 left-72 w-[350px] h-[600px]"
+              style={{ zIndex: 40 }}
             >
               <Image
                 src="/images/sec6-app.png"
@@ -103,6 +113,7 @@ export function Monitoring({ language }: MonitoringProps) {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="lg:hidden absolute inset-0 flex items-center justify-center"
+              style={{ zIndex: 10 }}
             >
               <div className="relative w-full h-full mx-auto">
                 <Image
