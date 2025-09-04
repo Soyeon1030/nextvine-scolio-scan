@@ -124,9 +124,9 @@ export function Features({ language }: FeaturesProps) {
             </div>
 
             {/* Comparison Table */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 xl:flex xl:justify-start xl:gap-6">
               {/* Traditional Way Section */}
-              <div className="bg-[#F2F2F2] rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3 w-full">
+              <div className="bg-[#F2F2F2] rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3 w-full xl:w-[400px]">
                 <h3 className="text-base sm:text-lg font-bold text-gray-800 text-center md:text-left mb-3 lg:mb-4">
                   기존 방식
                 </h3>
@@ -151,7 +151,7 @@ export function Features({ language }: FeaturesProps) {
               </div>
 
               {/* Scoliscan Way Section */}
-              <div className="gradient-primary rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3 w-full">
+              <div className="gradient-primary rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3 w-full xl:w-[400px]">
                 <h3 className="text-base sm:text-lg font-bold text-white text-center md:text-left mb-3 lg:mb-4">
                   Scoliscan의 방식
                 </h3>
