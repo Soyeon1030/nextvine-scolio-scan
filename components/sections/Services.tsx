@@ -27,7 +27,7 @@ export function Services({ language }: ServicesProps) {
 
   useEffect(() => {
     let lastScrollTime = 0
-    const scrollDelay = 500 // 스크롤 간격 제한 (500ms)
+    const scrollDelay = 1200 // 스크롤 간격 제한 (1200ms)
 
     const handleWheel = (e: WheelEvent) => {
       // 데스크톱에서만 스크롤 인터랙션 처리 (1024px 이상)

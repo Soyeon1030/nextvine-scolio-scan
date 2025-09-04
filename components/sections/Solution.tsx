@@ -52,7 +52,7 @@ export function Solution({ language }: SolutionProps) {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             className="space-y-4"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight px-4">
@@ -67,7 +67,7 @@ export function Solution({ language }: SolutionProps) {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="relative max-w-2xl mx-auto"
           >
             {/* Triangle Container */}
@@ -77,7 +77,7 @@ export function Solution({ language }: SolutionProps) {
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
                 className="absolute top-0 left-[calc(50%-3rem)] lg:left-[calc(50%-5rem)]"
                 style={{ zIndex: 10 }}
               >
@@ -95,7 +95,7 @@ export function Solution({ language }: SolutionProps) {
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
+                transition={{ duration: 0.4, delay: 0.4 }}
                 className="absolute bottom-0 left-[calc(15%-3rem)] lg:left-[calc(20%-4rem)]"
                 style={{ zIndex: 10 }}
               >
@@ -113,7 +113,7 @@ export function Solution({ language }: SolutionProps) {
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.9 }}
+                transition={{ duration: 0.4, delay: 0.5 }}
                 className="absolute bottom-0 left-[calc(85%-3rem)] lg:left-[calc(80%-4rem)]"
                 style={{ zIndex: 10 }}
               >
@@ -133,7 +133,7 @@ export function Solution({ language }: SolutionProps) {
                 <motion.line
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
-                  transition={{ duration: 1.0, delay: 0.8 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
                   x1="50%"
                   y1="20%"
                   x2="20%"
@@ -147,7 +147,7 @@ export function Solution({ language }: SolutionProps) {
                 <motion.line
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
-                  transition={{ duration: 1.0, delay: 1.0 }}
+                  transition={{ duration: 0.6, delay: 0.7 }}
                   x1="20%"
                   y1="80%"
                   x2="80%"
@@ -161,7 +161,7 @@ export function Solution({ language }: SolutionProps) {
                 <motion.line
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
-                  transition={{ duration: 1.0, delay: 1.2 }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
                   x1="80%"
                   y1="80%"
                   x2="50%"
@@ -192,7 +192,7 @@ export function Solution({ language }: SolutionProps) {
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 1.8 }}
+                transition={{ duration: 0.5, delay: 0.9 }}
                 className="absolute top-[45%] left-[25%] transform -translate-x-1/2 -translate-y-1/2"
               >
                 <div className="bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-md shadow-sm border border-primary-200">
@@ -205,7 +205,7 @@ export function Solution({ language }: SolutionProps) {
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 2.0 }}
+                transition={{ duration: 0.5, delay: 1.0 }}
                 className="absolute left-1/2 transform -translate-x-1/2"
                 style={{ bottom: '7%' }}
               >
@@ -219,7 +219,7 @@ export function Solution({ language }: SolutionProps) {
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 2.2 }}
+                transition={{ duration: 0.5, delay: 1.1 }}
                 className="absolute top-[45%] right-[25%] transform translate-x-1/2 -translate-y-1/2"
               >
                 <div className="bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-md shadow-sm border border-primary-200">
@@ -233,7 +233,7 @@ export function Solution({ language }: SolutionProps) {
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 2.4 }}
+                transition={{ duration: 0.5, delay: 1.2 }}
                 className="absolute ab-center"
                 style={{ 
                   zIndex: 15, 
@@ -255,7 +255,7 @@ export function Solution({ language }: SolutionProps) {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.6 }}
+            transition={{ duration: 0.5, delay: 1.3 }}
             className="max-w-4xl mx-auto"
           >
             <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed bg-gray-50 p-4 sm:p-6 rounded-lg border-l-4 border-primary-500">

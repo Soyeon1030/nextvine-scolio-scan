@@ -11,7 +11,7 @@ interface AboutProps {
 export function About({ language }: AboutProps) {
   const [currentStep, setCurrentStep] = useState(0)
   const [isInternalScrolling, setIsInternalScrolling] = useState(false)
-  const [isTablet, setIsTablet] = useState(false)
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false)
   const stepRef = useRef(currentStep)
 
   const content = {
@@ -52,8 +52,8 @@ export function About({ language }: AboutProps) {
   useEffect(() => {
     const checkScreenSize = () => {
       const width = window.innerWidth
-      // 태블릿: 768px ~ 1023px
-      setIsTablet(width >= 768 && width < 1024)
+      // 모바일/태블릿: 1024px 미만
+      setIsMobileOrTablet(width < 1024)
     }
     
     checkScreenSize()
@@ -66,6 +66,9 @@ export function About({ language }: AboutProps) {
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
+      // 모바일/태블릿에서는 스크롤 인터랙션 비활성화
+      if (isMobileOrTablet) return
+      
       // About 섹션이 현재 활성화된 섹션인지 확인
       const aboutSection = document.querySelector('[data-section="about"]') as HTMLElement
       if (!aboutSection) return
@@ -105,6 +108,9 @@ export function About({ language }: AboutProps) {
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      // 모바일/태블릿에서는 키보드 인터랙션 비활성화
+      if (isMobileOrTablet) return
+      
       const aboutSection = document.querySelector('[data-section="about"]') as HTMLElement
       if (!aboutSection) return
 
@@ -144,7 +150,7 @@ export function About({ language }: AboutProps) {
       document.removeEventListener('wheel', handleWheel, { capture: true })
       document.removeEventListener('keydown', handleKeyDown, { capture: true })
     }
-  }, [language, isInternalScrolling, content])
+  }, [language, isInternalScrolling, content, isMobileOrTablet])
 
   return (
     <div data-section="about" className="min-h-screen lg:h-full flex items-center justify-center relative overflow-hidden overflow-x-hidden">
@@ -183,8 +189,8 @@ export function About({ language }: AboutProps) {
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ 
-                  opacity: isTablet ? 1 : (currentStep >= 0 ? 1 : 0),
-                  y: isTablet ? 0 : (currentStep >= 0 ? 0 : 30)
+                  opacity: isMobileOrTablet ? 1 : (currentStep >= 0 ? 1 : 0),
+                  y: isMobileOrTablet ? 0 : (currentStep >= 0 ? 0 : 30)
                 }}
                 transition={{ 
                   duration: 1.0,
@@ -210,12 +216,12 @@ export function About({ language }: AboutProps) {
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ 
-                  opacity: isTablet ? 1 : (currentStep >= 1 ? 1 : 0),
-                  y: isTablet ? 0 : (currentStep >= 1 ? 0 : 30)
+                  opacity: isMobileOrTablet ? 1 : (currentStep >= 1 ? 1 : 0),
+                  y: isMobileOrTablet ? 0 : (currentStep >= 1 ? 0 : 30)
                 }}
                 transition={{ 
                   duration: 1.0,
-                  delay: 0.5,
+                  delay: isMobileOrTablet ? 0.5 : 0,
                   ease: [0.25, 0.46, 0.45, 0.94]
                 }}
               >
@@ -237,16 +243,18 @@ export function About({ language }: AboutProps) {
         </div>
       </Container>
       
-      {/* Step indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-40">
-        {content[language].steps.map((_, index) => (
-          <div
-            key={index}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              currentStep === index ? 'bg-primary-400 scale-125' : 'bg-white/40'
-            }`}
-          />
-        ))}
+      {/* Step indicator - 데스크톱에서만 표시 */}
+      <div className="hidden lg:block absolute bottom-8 left-1/2 transform -translate-x-1/2 z-40">
+        <div className="flex space-x-2">
+          {content[language].steps.map((_, index) => (
+            <div
+              key={index}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                currentStep === index ? 'bg-primary-400 scale-125' : 'bg-white/40'
+              }`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   )
