@@ -13,6 +13,13 @@ interface ServicesProps {
 export function Services({ language }: ServicesProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [currentStep, setCurrentStep] = useState(0)
+  
+  // 누적 스크롤 제어를 위한 상태
+  const accumulatedDelta = useRef(0)
+  const lastScrollTime = useRef(0)
+  const lastDirection = useRef<'up' | 'down' | null>(null)
+  const SCROLL_THRESHOLD = 400 // 단계 변경에 필요한 누적 델타값
+  const TIME_WINDOW = 3000 // 3초 시간 윈도우
 
   useEffect(() => {
     const handleSectionChange = (e: CustomEvent) => {
@@ -35,9 +42,6 @@ export function Services({ language }: ServicesProps) {
   }, [])
 
   useEffect(() => {
-    let lastScrollTime = 0
-    const scrollDelay = 1800 // 스크롤 간격 제한 (1800ms)
-
     const handleWheel = (e: WheelEvent) => {
       // 데스크톱에서만 스크롤 인터랙션 처리 (1024px 이상)
       if (window.innerWidth < 1024) return
@@ -51,35 +55,55 @@ export function Services({ language }: ServicesProps) {
 
       if (isServicesVisible) {
         const now = Date.now()
-        if (now - lastScrollTime < scrollDelay) return
-        lastScrollTime = now
-
+        const currentDirection = e.deltaY > 0 ? 'down' : 'up'
+        
         e.preventDefault()
         e.stopPropagation()
 
-        if (e.deltaY > 0) {
-          // 아래로 스크롤
-          if (currentStep < 2) {
-            // 다음 단계로
-            setCurrentStep(prev => prev + 1)
+        // 시간 윈도우 초과 시 누적값 리셋
+        if (now - lastScrollTime.current > TIME_WINDOW) {
+          accumulatedDelta.current = 0
+          lastDirection.current = null
+        }
+        
+        // 방향이 바뀌면 누적값 리셋
+        if (lastDirection.current && lastDirection.current !== currentDirection) {
+          accumulatedDelta.current = 0
+        }
+        
+        // 현재 스크롤 누적
+        accumulatedDelta.current += Math.abs(e.deltaY)
+        lastDirection.current = currentDirection
+        lastScrollTime.current = now
+
+        // 임계값 도달 시 단계 변경
+        if (accumulatedDelta.current >= SCROLL_THRESHOLD) {
+          accumulatedDelta.current = 0 // 누적값 리셋
+          
+          if (currentDirection === 'down') {
+            // 아래로 스크롤
+            if (currentStep < 2) {
+              // 다음 단계로
+              setCurrentStep(prev => prev + 1)
+            } else {
+              // 마지막 단계에서 다음 섹션으로
+              setTimeout(() => {
+                const event = new CustomEvent('scrollToSection', { detail: { sectionIndex: 7 } })
+                window.dispatchEvent(event)
+              }, 100)
+            }
           } else {
-            // 마지막 단계에서 다음 섹션으로
-            setTimeout(() => {
-              const event = new CustomEvent('scrollToSection', { detail: { sectionIndex: 7 } })
-              window.dispatchEvent(event)
-            }, 100)
-          }
-        } else if (e.deltaY < 0) {
-          // 위로 스크롤
-          if (currentStep > 0) {
-            // 이전 단계로
-            setCurrentStep(prev => prev - 1)
-          } else {
-            // 첫 단계에서 이전 섹션으로
-            setTimeout(() => {
-              const event = new CustomEvent('scrollToSection', { detail: { sectionIndex: 5 } })
-              window.dispatchEvent(event)
-            }, 100)
+            // 위로 스크롤
+            if (currentStep > 0) {
+              // 이전 단계로
+              setCurrentStep(prev => prev - 1)
+            } else {
+              // 첫 단계에서 이전 섹션으로
+              setTimeout(() => {
+                const event = new CustomEvent('scrollToSection', { detail: { sectionIndex: 5 } })
+                window.dispatchEvent(event)
+              }, 100)
+            }
           }
         }
       }

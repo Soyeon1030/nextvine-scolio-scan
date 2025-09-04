@@ -79,7 +79,7 @@ export function Interactive({ language }: InteractiveProps) {
               <img 
                 src="/images/phone-img.png" 
                 alt="Phone Mockup"
-                className="w-72 h-auto md:w-80 lg:w-96 relative z-20 drop-shadow-2xl lg:block hidden"
+                className="w-64 h-auto lg:w-80 xl:w-96 relative z-20 drop-shadow-2xl lg:block hidden"
                 style={{
                   filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.3)) drop-shadow(0 10px 25px rgba(0, 0, 0, 0.2))'
                 }}
@@ -87,8 +87,8 @@ export function Interactive({ language }: InteractiveProps) {
               
               {/* 핸드폰 화면 영역 - scoliosis.html iframe */}
               {/* 데스크톱: 핸드폰 이미지 위에 절대 위치 */}
-              <div className="absolute top-9 md:top-10 lg:top-12 left-1/2 transform -translate-x-1/2 z-30 lg:block hidden">
-                <div className="w-60 h-[480px] md:w-64 md:h-[520px] lg:w-80 lg:h-[640px] rounded-3xl overflow-hidden bg-black">
+              <div className="absolute top-9 lg:top-10 xl:top-12 left-1/2 transform -translate-x-1/2 z-30 lg:block hidden">
+                <div className="w-52 h-[400px] lg:w-64 lg:h-[520px] xl:w-80 xl:h-[640px] rounded-3xl overflow-hidden bg-black">
                   <iframe
                     ref={iframeRef}
                     src="/Interact/scoliosis.html"
@@ -101,13 +101,13 @@ export function Interactive({ language }: InteractiveProps) {
               </div>
 
               {/* 태블릿/모바일: 폰 이미지 테두리 효과와 함께 */}
-              <div className="lg:hidden relative w-72 h-auto md:w-80 mx-auto">
+              <div className="lg:hidden relative w-64 h-auto md:w-72 xl:w-80 mx-auto">
                 <div className="relative bg-gray-900 rounded-[2.5rem] p-3 shadow-2xl">
                   {/* 상단 테두리 (노치 영역) */}
                   <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-28 h-6 bg-gray-900 rounded-b-xl z-40"></div>
                   
                   {/* iframe 영역 */}
-                  <div className="w-full h-[500px] md:h-[550px] rounded-[2rem] overflow-hidden bg-black relative">
+                  <div className="w-full h-[400px] md:h-[450px] xl:h-[550px] rounded-[2rem] overflow-hidden bg-black relative">
                     <iframe
                       ref={iframeRef}
                       src="/Interact/scoliosis.html"
