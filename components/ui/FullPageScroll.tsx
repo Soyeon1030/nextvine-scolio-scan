@@ -18,15 +18,22 @@ export function FullPageScroll({ children, className = '' }: FullPageScrollProps
   // children을 배열로 변환
   const childrenArray = Array.isArray(children) ? children : [children]
 
-  const scrollToSection = (sectionIndex: number) => {
+  const scrollToSection = (sectionIndex: number, fromSection?: number) => {
     if (isScrolling || sectionIndex < 0 || sectionIndex >= childrenArray.length) return
+    
+    const previousSection = fromSection !== undefined ? fromSection : currentSection
+    const direction = sectionIndex > previousSection ? 'down' : 'up'
     
     setIsScrolling(true)
     setCurrentSection(sectionIndex)
     
-    // 섹션 변경 이벤트 발생
+    // 섹션 변경 이벤트 발생 (방향 정보 포함)
     const event = new CustomEvent('sectionChanged', { 
-      detail: { sectionIndex } 
+      detail: { 
+        sectionIndex, 
+        previousSection,
+        direction
+      } 
     })
     window.dispatchEvent(event)
     

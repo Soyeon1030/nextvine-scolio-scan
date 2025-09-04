@@ -17,7 +17,16 @@ export function Services({ language }: ServicesProps) {
   useEffect(() => {
     const handleSectionChange = (e: CustomEvent) => {
       if (e.detail.sectionIndex === 6) { // Services 섹션
-        setCurrentStep(0) // 섹션 진입시 첫 번째 단계로 초기화
+        const { previousSection, direction } = e.detail
+        
+        // 진입 방향에 따라 다른 초기 단계 설정
+        if (direction === 'up') {
+          // 아래에서 위로 (Contact → Services): 마지막 단계(2)로 시작
+          setCurrentStep(2)
+        } else {
+          // 위에서 아래로 (Monitoring → Services) 또는 직접 점프: 첫 번째 단계(0)로 시작
+          setCurrentStep(0)
+        }
       }
     }
 
@@ -27,7 +36,7 @@ export function Services({ language }: ServicesProps) {
 
   useEffect(() => {
     let lastScrollTime = 0
-    const scrollDelay = 1200 // 스크롤 간격 제한 (1200ms)
+    const scrollDelay = 1800 // 스크롤 간격 제한 (1800ms)
 
     const handleWheel = (e: WheelEvent) => {
       // 데스크톱에서만 스크롤 인터랙션 처리 (1024px 이상)
@@ -149,7 +158,8 @@ export function Services({ language }: ServicesProps) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="flex items-center justify-center gap-2 mb-6"
+            className="inline-flex items-center justify-center gap-2 mb-6 px-6 py-3 rounded-full"
+            style={{ backgroundColor: 'rgba(0, 212, 170, 0.2)' }}
           >
             <Image src="/images/lightbulb.svg" alt="Lightbulb" width={24} height={24} />
             <span className="text-primary-600 font-medium">{content[language].tag}</span>
@@ -175,19 +185,19 @@ export function Services({ language }: ServicesProps) {
         </div>
 
         {/* 단계 인디케이터 - 데스크톱에서만 표시 */}
-        <div className="hidden lg:block absolute top-72 left-1/2 transform -translate-x-1/2 z-20">
+        {/* <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 z-20" 
+             style={{ top: 'clamp(16rem, 20vh + 8rem, 20rem)' }}>
           <div className="flex space-x-2">
             {content[language].steps.map((_, index) => (
               <div
                 key={index}
-                className={`w-12 h-1 rounded-full transition-colors duration-500 ${
+                className={`w-10 h-1 sm:w-12 rounded-full transition-colors duration-500 ${
                   index <= currentStep ? 'bg-primary-600' : 'bg-gray-200'
                 }`}
               />
             ))}
           </div>
-        </div>
-
+        </div> */}
 
         {/* 메인 컨텐츠 */}
         {/* 데스크톱 버전 - 스크롤 인터랙션 */}
