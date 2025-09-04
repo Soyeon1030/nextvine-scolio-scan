@@ -24,10 +24,10 @@ export function Interactive({ language }: InteractiveProps) {
 
   return (
     <>
-      <section className="relative min-h-screen sm:h-[600px] lg:min-h-screen h-[900px] lg:h-auto bg-gray-50 overflow-hidden lg:overflow-visible overflow-x-hidden">
+      <section className="relative min-h-screen sm:h-[500px] lg:min-h-screen h-[600px] lg:h-auto bg-gray-50 overflow-hidden lg:overflow-visible overflow-x-hidden">
         <Container size="1600" className="relative z-10 h-full">
           {/* 제목과 부제목을 위로 위치 */}
-          <div className="pt-28 sm:pt-16 md:pt-20 lg:pt-24 pb-6 sm:pb-8 text-center">
+          <div className="pt-27 sm:pt-16 md:pt-20 lg:pt-24 pb-6 sm:pb-8 text-center">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-4">
               {title}
             </h2>
@@ -52,16 +52,16 @@ export function Interactive({ language }: InteractiveProps) {
             />
           </div>
           
-          {/* 반원 배경 - 더 크게 */}
+          {/* 반원 배경 - 애니메이션과 정확히 같은 곡률로 맞춤 */}
           <div 
-            className="gradient-primary rounded-t-full w-[350px] h-52 sm:w-[450px] sm:h-60 md:w-[600px] md:h-72 lg:w-[800px] lg:h-96 xl:w-[1000px] xl:h-[500px] relative"
+            className="gradient-primary rounded-t-full w-[400px] h-[200px] sm:w-[500px] sm:h-[250px] md:w-[650px] md:h-[325px] lg:w-[850px] lg:h-[425px] xl:w-[1050px] xl:h-[525px] relative"
             style={{
               borderBottomLeftRadius: 0,
               borderBottomRightRadius: 0
             }}
           >
             {/* 핸드폰 목업 - 반원 하단 중앙에 위치 */}
-            <div className="absolute bottom-16 sm:-bottom-8 md:-bottom-12 lg:-bottom-16 left-1/2 transform -translate-x-1/2">
+            <div className="absolute bottom-12 sm:bottom-4 md:bottom-0 lg:-bottom-8 xl:-bottom-12 left-1/2 transform -translate-x-1/2">
               {/* 간단한 안내 텍스트 - 핸드폰 상단 */}
               <div className="w-full absolute -top-6 sm:-top-8 md:-top-10 lg:-top-12 left-1/2 transform -translate-x-1/2 text-center z-40">
                 <div className="flex items-center justify-center space-x-1 sm:space-x-2">

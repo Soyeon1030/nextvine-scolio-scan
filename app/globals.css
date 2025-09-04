@@ -120,3 +120,6 @@
   transform: translate(-50%, 50%) !important ;
 }
 
+.pt-27 {
+  padding-top: 2rem;
+}
