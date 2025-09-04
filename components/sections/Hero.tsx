@@ -10,9 +10,9 @@ interface HeroProps {
 
 export function Hero({ language }: HeroProps) {
   const handleNotifyClick = () => {
-    // Contact 섹션(인덱스 7)으로 스크롤
+    // Contact 섹션(인덱스 8)으로 스크롤
     const event = new CustomEvent('scrollToSection', { 
-      detail: { sectionIndex: 7 } 
+      detail: { sectionIndex: 8 } 
     })
     window.dispatchEvent(event)
   }
