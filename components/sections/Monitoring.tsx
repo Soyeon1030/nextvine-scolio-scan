@@ -31,46 +31,47 @@ export function Monitoring({ language }: MonitoringProps) {
   }
 
   return (
-    <div className="h-full flex items-center justify-center bg-gray-50 relative overflow-hidden">
-      {/* 배경 도형 - 섹션의 80% 높이, 90% 너비로 오른쪽에서 시작 */}
+    <div className="h-full lg:flex lg:items-center lg:justify-center min-h-[800px] lg:min-h-screen bg-gray-50 relative overflow-hidden">
+      {/* 모바일/태블릿용 gradient 배경 */}
+      <div className="absolute inset-0 gradient-primary lg:hidden opacity-90" />
+      {/* 배경 도형 - PC/노트북에서만 표시 */}
       <motion.div
         initial={{ x: '50vw', opacity: 0 }}
         whileInView={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="absolute bottom-[0%] right-0 gradient-primary rounded-tl-[300px]"
+        className="hidden lg:block absolute bottom-[0%] right-0 gradient-primary rounded-tl-[300px]"
         style={{ 
           height: '90%', 
-          width: '90%',
+          width: '95%',
           zIndex: 1
         }}
       />
 
       <Container size="1600">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10 py-8 sm:py-12 lg:py-0">
           {/* 텍스트 콘텐츠 - 왼쪽 하단 */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-6 lg:self-end lg:pb-16 p-20"
+            className="space-y-4 sm:space-y-6 p-4 sm:p-6 lg:self-end lg:pb-16 lg:p-20 order-2 lg:order-1"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
               {content[language].title}
             </h2>
-            <p className="text-base md:text-lg text-white leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-white leading-relaxed">
               {content[language].subtitle}
             </p>
           </motion.div>
 
           {/* 이미지 영역 - 오른쪽 */}
-          <div className="relative lg:h-[600px] h-[400px] overflow-visible">
-
-            {/* PC 이미지 - sec6-pc (오른쪽에서 순차적으로 나옴, 일부가 오른쪽으로 걸쳐나감) */}
+          <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] overflow-visible order-1 lg:order-2">
+            {/* PC 이미지 - sec6-pc - 데스크톱에서만 표시 */}
             <motion.div
               initial={{ x: 400, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="absolute top-4 left-0 w-[1100px] h-[680px]"
+              className="hidden lg:block absolute top-4 left-0 w-[1100px] h-[680px]"
             >
               <Image
                 src="/images/sec6-pc.png"
@@ -80,12 +81,12 @@ export function Monitoring({ language }: MonitoringProps) {
               />
             </motion.div>
 
-            {/* 앱 이미지 - sec6-app (오른쪽에서 순차적으로 나옴) */}
+            {/* 앱 이미지 - sec6-app */}
             <motion.div
               initial={{ x: 300, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="absolute top-24 left-72 w-[600px] h-[850px]"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-64 sm:w-40 sm:h-80 lg:top-24 lg:left-72 lg:w-[350px] lg:h-[600px] lg:transform-none"
               style={{ zIndex: 30 }}
             >
               <Image
@@ -94,6 +95,23 @@ export function Monitoring({ language }: MonitoringProps) {
                 fill
                 className="object-contain"
               />
+            </motion.div>
+
+            {/* 모바일/태블릿용 심플 사진 - PC 이미지 대체 */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="lg:hidden absolute inset-0 flex items-center justify-center"
+            >
+              <div className="relative w-full h-full mx-auto">
+                <Image
+                  src="/images/sec6-pc.png"
+                  alt="Mobile App Interface"
+                  fill
+                  className="object-contain"
+                />
+              </div>
             </motion.div>
           </div>
         </div>
