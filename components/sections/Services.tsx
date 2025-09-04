@@ -30,6 +30,9 @@ export function Services({ language }: ServicesProps) {
     const scrollDelay = 500 // 스크롤 간격 제한 (500ms)
 
     const handleWheel = (e: WheelEvent) => {
+      // 데스크톱에서만 스크롤 인터랙션 처리 (1024px 이상)
+      if (window.innerWidth < 1024) return
+      
       // Services 섹션에 있을 때만 처리
       const servicesElement = containerRef.current
       if (!servicesElement) return
@@ -138,10 +141,10 @@ export function Services({ language }: ServicesProps) {
   const currentStepData = content[language].steps[currentStep]
 
   return (
-    <div ref={containerRef} className="h-screen bg-white text-gray-900 relative overflow-hidden">
+    <div ref={containerRef} className="min-h-screen lg:h-screen bg-white text-gray-900 relative overflow-hidden">
       <Container size="1600" className="h-full">
         {/* 헤더 (고정) */}
-        <div className="absolute top-16 left-1/2 transform -translate-x-1/2 text-center z-20 w-full max-w-4xl px-4 pt-8">
+        <div className="absolute top-8 sm:top-12 lg:top-16 left-1/2 transform -translate-x-1/2 text-center z-20 w-full max-w-4xl px-4 pt-4 sm:pt-6 lg:pt-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -156,7 +159,7 @@ export function Services({ language }: ServicesProps) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8 }}
-            className="text-3xl md:text-4xl font-bold mb-4 leading-tight-custom"
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 leading-tight-custom"
           >
             {content[language].title}
           </motion.h2>
@@ -165,30 +168,33 @@ export function Services({ language }: ServicesProps) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-lg text-gray-600"
+            className="text-base sm:text-lg text-gray-600 px-4 sm:px-0"
           >
             {content[language].subtitle}
           </motion.p>
         </div>
 
-        {/* 단계 인디케이터 */}
-        <div className="absolute top-72 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
-          {content[language].steps.map((_, index) => (
-            <div
-              key={index}
-              className={`w-12 h-1 rounded-full transition-colors duration-500 ${
-                index <= currentStep ? 'bg-primary-600' : 'bg-gray-200'
-              }`}
-            />
-          ))}
+        {/* 단계 인디케이터 - 데스크톱에서만 표시 */}
+        <div className="hidden lg:block absolute top-72 left-1/2 transform -translate-x-1/2 z-20">
+          <div className="flex space-x-2">
+            {content[language].steps.map((_, index) => (
+              <div
+                key={index}
+                className={`w-12 h-1 rounded-full transition-colors duration-500 ${
+                  index <= currentStep ? 'bg-primary-600' : 'bg-gray-200'
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
 
         {/* 메인 컨텐츠 */}
-        <div className="flex items-center justify-center h-full pt-40">
-          <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+        {/* 데스크톱 버전 - 스크롤 인터랙션 */}
+        <div className="hidden lg:flex items-center justify-center h-full pt-40 pb-8">
+          <div className="grid grid-cols-2 gap-16 items-center max-w-6xl mx-auto px-4">
             {/* 이미지 (항상 왼쪽) */}
-            <div className="relative lg:order-1">
+            <div className="relative order-1">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`image-${currentStep}`}
@@ -207,14 +213,13 @@ export function Services({ language }: ServicesProps) {
                     alt={currentStepData.title}
                     className="w-full h-full object-contain transition-transform duration-700 hover:scale-105"
                   />
-                  {/* 이미지 오버레이 */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                 </motion.div>
               </AnimatePresence>
             </div>
 
             {/* 텍스트 콘텐츠 (항상 오른쪽) */}
-            <div className="relative lg:order-2">
+            <div className="relative order-2">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`text-${currentStep}`}
@@ -238,7 +243,7 @@ export function Services({ language }: ServicesProps) {
                   </motion.div>
                   
                   <motion.h3 
-                    className="text-2xl md:text-3xl font-bold mb-4 text-gray-900"
+                    className="text-3xl font-bold mb-4 text-gray-900"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.3 }}
@@ -247,7 +252,7 @@ export function Services({ language }: ServicesProps) {
                   </motion.h3>
                   
                   <motion.p 
-                    className="text-gray-600 leading-relaxed whitespace-pre-line mb-6"
+                    className="text-base text-gray-600 leading-relaxed whitespace-pre-line mb-6"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.25, duration: 0.3 }}
@@ -255,7 +260,6 @@ export function Services({ language }: ServicesProps) {
                     {currentStepData.description}
                   </motion.p>
 
-                  {/* 태그들 */}
                   <motion.div 
                     className="flex flex-wrap gap-2"
                     initial={{ opacity: 0 }}
@@ -280,10 +284,65 @@ export function Services({ language }: ServicesProps) {
           </div>
         </div>
 
-        {/* 스크롤 힌트 */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center text-gray-400 text-sm">
+        {/* 모바일/태블릿 버전 - 모든 단계 순차적 표시 */}
+        <div className="lg:hidden pt-60 sm:pt-72 pb-12">
+          <div className="max-w-4xl mx-auto space-y-12 sm:space-y-16">
+            {content[language].steps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="space-y-6 sm:space-y-8"
+              >
+                {/* 이미지 */}
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 shadow-lg mx-auto max-w-sm sm:max-w-md">
+                  <img
+                    src={step.image}
+                    alt={step.title}
+                    className="w-full h-full object-contain"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
+                </div>
+
+                {/* 텍스트 콘텐츠 */}
+                <div className="bg-white/90 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-sm">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary-600 text-white rounded-full flex items-center justify-center text-lg sm:text-xl font-bold shadow-lg flex-shrink-0">
+                      {step.step}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900">
+                        {step.title}
+                      </h3>
+                    </div>
+                  </div>
+                  
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-line mb-4 sm:mb-6">
+                    {step.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {step.tags.map((tag, tagIndex) => (
+                      <span
+                        key={tagIndex}
+                        className="px-2 py-1 sm:px-3 bg-primary-100 text-primary-700 text-xs sm:text-sm rounded-full font-medium"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* 스크롤 힌트 - 데스크톱에서만 표시 */}
+        <div className="hidden lg:block absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center text-gray-400 text-sm">
           <div className="flex items-center gap-2">
-            <span>스크롤하여 단계별로 확인하세요</span>
+            <span>{language === 'ko' ? '스크롤하여 단계별로 확인하세요' : 'Scroll to view each step'}</span>
             <div className="w-4 h-6 border border-gray-300 rounded-full flex justify-center">
               <div className="w-1 h-2 bg-gray-300 rounded-full mt-1 animate-bounce" />
             </div>
