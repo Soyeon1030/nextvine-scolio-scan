@@ -27,7 +27,7 @@ export function Interactive({ language }: InteractiveProps) {
       <section className="relative min-h-screen sm:h-[600px] lg:min-h-screen h-[900px] lg:h-auto bg-gray-50 overflow-hidden lg:overflow-visible overflow-x-hidden">
         <Container size="1600" className="relative z-10 h-full">
           {/* 제목과 부제목을 위로 위치 */}
-          <div className="pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-6 sm:pb-8 text-center">
+          <div className="pt-28 sm:pt-16 md:pt-20 lg:pt-24 pb-6 sm:pb-8 text-center">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-4">
               {title}
             </h2>
@@ -61,7 +61,7 @@ export function Interactive({ language }: InteractiveProps) {
             }}
           >
             {/* 핸드폰 목업 - 반원 하단 중앙에 위치 */}
-            <div className="absolute -bottom-6 sm:-bottom-8 md:-bottom-12 lg:-bottom-16 left-1/2 transform -translate-x-1/2">
+            <div className="absolute bottom-16 sm:-bottom-8 md:-bottom-12 lg:-bottom-16 left-1/2 transform -translate-x-1/2">
               {/* 간단한 안내 텍스트 - 핸드폰 상단 */}
               <div className="w-full absolute -top-6 sm:-top-8 md:-top-10 lg:-top-12 left-1/2 transform -translate-x-1/2 text-center z-40">
                 <div className="flex items-center justify-center space-x-1 sm:space-x-2">
@@ -110,7 +110,7 @@ export function Interactive({ language }: InteractiveProps) {
                     <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-28 h-6 bg-gray-900 rounded-b-xl z-40"></div>
                     
                     {/* SpinalInteraction 컴포넌트 영역 */}
-                    <div className="w-full h-[400px] md:h-[450px] xl:h-[550px] rounded-[2rem] overflow-hidden relative">
+                    <div className="w-full h-[450px] md:h-[450px] xl:h-[550px] rounded-[2rem] overflow-hidden relative">
                       <SpinalInteraction 
                         language={language} 
                         showControls={false}
