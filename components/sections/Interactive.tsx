@@ -19,7 +19,7 @@ export function Interactive({ language }: InteractiveProps) {
     : 'Precise and actual-size 3D body modeling possible on all smartphones'
 
   return (
-    <section className="relative min-h-screen lg:min-h-screen h-[900px] lg:h-auto bg-gray-50 overflow-hidden lg:overflow-visible overflow-x-hidden">
+    <section className="relative min-h-screen sm:h-[600px] lg:min-h-screen h-[900px] lg:h-auto bg-gray-50 overflow-hidden lg:overflow-visible overflow-x-hidden">
       <Container size="1600" className="relative z-10 h-full">
         {/* 제목과 부제목을 위로 위치 */}
         <div className="pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-6 sm:pb-8 text-center">
