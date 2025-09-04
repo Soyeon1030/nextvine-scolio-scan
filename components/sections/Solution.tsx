@@ -45,9 +45,9 @@ export function Solution({ language }: SolutionProps) {
   }
 
   return (
-    <div className="h-full flex items-center justify-center bg-white">
-      <Container size="1600">
-        <div className="text-center space-y-8">
+    <div className="h-full flex items-start justify-center bg-white">
+      <Container size="1600" className="pt-12 sm:pt-16 md:pt-20 lg:pt-24">
+        <div className="text-center space-y-6 sm:space-y-8">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -55,10 +55,10 @@ export function Solution({ language }: SolutionProps) {
             transition={{ duration: 0.8 }}
             className="space-y-4"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight-custom">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight px-4">
               {content[language].title}
             </h2>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto px-4">
               {content[language].subtitle}
             </p>
           </motion.div>
@@ -78,13 +78,10 @@ export function Solution({ language }: SolutionProps) {
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="absolute top-0"
-                style={{ 
-                  left: 'calc(50% - 5rem)',
-                  zIndex: 10
-                }}
+                className="absolute top-0 left-[calc(50%-3rem)] lg:left-[calc(50%-5rem)]"
+                style={{ zIndex: 10 }}
               >
-                <div className="relative" style={{ width: '10rem', height: '12rem' }}>
+                <div className="relative w-24 h-32 sm:w-28 sm:h-36 md:w-32 md:h-40 lg:w-40 lg:h-48">
                   <Image
                     src="/images/solution-01.png"
                     alt={content[language].roles.doctor}
@@ -99,13 +96,10 @@ export function Solution({ language }: SolutionProps) {
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
-                className="absolute bottom-0"
-                style={{ 
-                  left: 'calc(20% - 5rem)',
-                  zIndex: 10
-                }}
+                className="absolute bottom-0 left-[calc(15%-3rem)] lg:left-[calc(20%-4rem)]"
+                style={{ zIndex: 10 }}
               >
-                <div className="relative" style={{ width: '10rem', height: '12rem' }}>
+                <div className="relative w-24 h-32 sm:w-28 sm:h-36 md:w-32 md:h-40 lg:w-40 lg:h-48">
                   <Image
                     src="/images/solution-02.png"
                     alt={content[language].roles.patient}
@@ -120,13 +114,10 @@ export function Solution({ language }: SolutionProps) {
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.9 }}
-                className="absolute bottom-0"
-                style={{ 
-                  left: 'calc(80% - 5rem)',
-                  zIndex: 10
-                }}
+                className="absolute bottom-0 left-[calc(85%-3rem)] lg:left-[calc(80%-4rem)]"
+                style={{ zIndex: 10 }}
               >
-                <div className="relative" style={{ width: '10rem', height: '12rem' }}>
+                <div className="relative w-24 h-32 sm:w-28 sm:h-36 md:w-32 md:h-40 lg:w-40 lg:h-48">
                   <Image
                     src="/images/solution-03.png"
                     alt={content[language].roles.ai}
@@ -204,8 +195,8 @@ export function Solution({ language }: SolutionProps) {
                 transition={{ duration: 0.8, delay: 1.8 }}
                 className="absolute top-[45%] left-[25%] transform -translate-x-1/2 -translate-y-1/2"
               >
-                <div className="bg-white px-2 py-1 rounded-md shadow-sm border border-primary-200">
-                  <span className="text-xs font-medium text-primary-700">
+                <div className="bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-md shadow-sm border border-primary-200">
+                  <span className="text-xs sm:text-sm font-medium text-primary-700">
                     {content[language].connections.doctorPatient}
                   </span>
                 </div>
@@ -218,8 +209,8 @@ export function Solution({ language }: SolutionProps) {
                 className="absolute left-1/2 transform -translate-x-1/2"
                 style={{ bottom: '7%' }}
               >
-                <div className="bg-white px-2 py-1 rounded-md shadow-sm border border-primary-200">
-                  <span className="text-xs font-medium text-primary-700">
+                <div className="bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-md shadow-sm border border-primary-200">
+                  <span className="text-xs sm:text-sm font-medium text-primary-700">
                     {content[language].connections.patientAi}
                   </span>
                 </div>
@@ -231,8 +222,8 @@ export function Solution({ language }: SolutionProps) {
                 transition={{ duration: 0.8, delay: 2.2 }}
                 className="absolute top-[45%] right-[25%] transform translate-x-1/2 -translate-y-1/2"
               >
-                <div className="bg-white px-2 py-1 rounded-md shadow-sm border border-primary-200">
-                  <span className="text-xs font-medium text-primary-700">
+                <div className="bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-md shadow-sm border border-primary-200">
+                  <span className="text-xs sm:text-sm font-medium text-primary-700">
                     {content[language].connections.aiDoctor}
                   </span>
                 </div>
@@ -251,8 +242,8 @@ export function Solution({ language }: SolutionProps) {
                   transform: 'translate(-50%, 50%) !important' 
                 }}
               >
-                <div className="bg-gradient-to-r from-primary-500 to-primary-600 text-white px-4 py-2 rounded-full shadow-lg">
-                  <span className="text-sm md:text-base font-bold">
+                <div className="bg-gradient-to-r from-primary-500 to-primary-600 text-white px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 rounded-full shadow-lg">
+                  <span className="text-xs sm:text-sm md:text-base font-bold">
                     {content[language].centerText}
                   </span>
                 </div>
@@ -267,7 +258,7 @@ export function Solution({ language }: SolutionProps) {
             transition={{ duration: 0.8, delay: 2.6 }}
             className="max-w-4xl mx-auto"
           >
-            <p className="text-base md:text-lg text-gray-600 leading-relaxed bg-gray-50 p-6 rounded-lg border-l-4 border-primary-500">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed bg-gray-50 p-4 sm:p-6 rounded-lg border-l-4 border-primary-500">
               {content[language].description}
             </p>
           </motion.div>
